@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Respondent {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  consentGiven Boolean       @default(false)
+  locale       String?
+
+  age                     Int?
+  gender                  String?
+  country                 String?
+  citizenship             String?
+  ethnicity               String?
+  education               String?
+  occupation              String?
+  incomeSource            String?
+  financeFeel             String?
+  relationshipStatus      String?
+  living                  String?
+  dailyIndoorHours        String?
+  religion                String?
+  hasCondition            Boolean?
+  conditionType           String?
+  dailyAnimeEpisodes      Int?
+  watchesInNativeLanguage Boolean?
+  watchLanguage           String?
+  languageLevel           String?
+  firstAnimeAgeRange      String?
+
+  sessions QuizSession[]
+}
+
+model QuizSession {
+  id           String          @id @default(cuid())
+  respondentId String
+  respondent   Respondent      @relation(fields: [respondentId], references: [id])
+  animeSlug    String
+  startedAt    DateTime        @default(now())
+  completedAt  DateTime?
+  responses    ItemResponse[]
+  scores       FactorScore[]
+  match        CharacterMatch?
+
+  @@index([respondentId])
+  @@index([animeSlug])
+}
+
+model ItemResponse {
+  id           String      @id @default(cuid())
+  sessionId    String
+  session      QuizSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  itemId       String
+  episodeTitle String?
+  value        Float?
+  textValue    String?
+  createdAt    DateTime    @default(now())
+
+  @@index([sessionId])
+  @@unique([sessionId, itemId, episodeTitle])
+}
+
+model FactorScore {
+  id              String      @id @default(cuid())
+  sessionId       String
+  session         QuizSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  scaleName       String
+  rawScore        Float
+  zScore          Float?
+  normalizedScore Float?
+  createdAt       DateTime    @default(now())
+
+  @@index([sessionId])
+  @@unique([sessionId, scaleName])
+}
+
+model Character {
+  id          String   @id @default(cuid())
+  name        String
+  animeSlug   String
+  description String?  @db.Text
+  vector      Float[]
+  createdAt   DateTime @default(now())
+
+  @@index([animeSlug])
+}
+
+model CharacterMatch {
+  id            String      @id @default(cuid())
+  sessionId     String      @unique
+  session       QuizSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  characterId   String?
+  characterName String
+  similarity    Float
+  narrative     String?
+  createdAt     DateTime    @default(now())
+}

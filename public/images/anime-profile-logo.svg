@@ -1,0 +1,12 @@
+<svg width="340" height="240" viewBox="0 0 680 480" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Anime Profile logo</title>
+<desc>A red triskelion symbol made of three curved comma shapes arranged in a circle, with the text ANIME PROFILE below in a bold blocky font.</desc>
+<g transform="translate(340,190)">
+  <g fill="#c81e1e">
+    <path d="M 0,-120 C 55,-120 95,-80 95,-25 C 95,-5 88,15 75,30 C 60,10 40,-2 15,-2 C -18,-2 -45,25 -45,58 C -45,25 -18,-2 15,-2 C 8,-40 -20,-70 -60,-85 C -35,-108 -18,-120 0,-120 Z"/>
+    <path d="M -104,60 C -84,10 -40,-25 15,-25 C 33,-25 50,-20 63,-11 C 45,3 33,25 33,50 C 33,83 6,110 -27,110 C -6,90 6,63 6,32 C -33,32 -68,55 -85,90 C -96,80 -102,70 -104,60 Z"/>
+    <path d="M 104,60 C 96,10 60,-30 15,-45 C -3,-51 -20,-52 -35,-49 C -22,-32 -15,-9 -15,15 C -15,48 -42,75 -75,75 C -46,86 -13,88 15,78 C 60,62 96,25 100,-15 C 103,5 105,32 104,60 Z"/>
+  </g>
+</g>
+<text x="340" y="360" text-anchor="middle" font-family="'Courier New', monospace" font-weight="700" font-size="58" letter-spacing="4" fill="#c81e1e">ANIME PROFILE</text>
+</svg>
