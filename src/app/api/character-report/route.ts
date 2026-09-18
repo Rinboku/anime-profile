@@ -136,24 +136,36 @@ Write a 1000-1300 word analysis in English that:
 
 Do not add a title or disclaimer, just the analysis text.`;
 
-const modelsToTry = ["gemini-3.6-flash","gemini-2.5-flash", "gemini-1.5-flash"]; 
-let result;
+const modelsToTry = ["gemini-3.6-flash", "gemini-3.0-flash"]; // update to verified-current model names
 let analysis: string | undefined;
 
-for (const modelName of modelsToTry) {
-  try {
-    console.log(`Se încearcă modelul: ${modelName}...`);
-    const model = genAI.getGenerativeModel({ model: modelName });
-    result = await model.generateContent(prompt);
-    
-    if (result && result.response) {
-      console.log(`Succes cu modelul: ${modelName}`);
-      analysis = result.response.text();
-      break; 
+async function tryGeminiModel(modelName: string, prompt: string, retries = 2): Promise<string | undefined> {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      console.log(`Se încearcă modelul: ${modelName} (attempt ${attempt + 1})...`);
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      if (result?.response) {
+        console.log(`Succes cu modelul: ${modelName}`);
+        return result.response.text();
+      }
+    } catch (err: any) {
+      const isOverloaded = err?.message?.includes("503") || err?.message?.includes("overloaded") || err?.message?.includes("high demand");
+      console.error(`Eroare detaliată pentru ${modelName} (attempt ${attempt + 1}):`, err?.message || err);
+      if (isOverloaded && attempt < retries) {
+        const delay = 1000 * (attempt + 1); // 1s, then 2s
+        await new Promise((res) => setTimeout(res, delay));
+        continue;
+      }
+      break; // non-retryable error, move to next model
     }
-  } catch (err: any) {
-    console.error(`Eroare detaliată pentru ${modelName}:`, err?.message || err);
   }
+  return undefined;
+}
+
+for (const modelName of modelsToTry) {
+  analysis = await tryGeminiModel(modelName, prompt);
+  if (analysis) break;
 }
 
 // Fallback final gratuit, dacă toate variantele Gemini au eșuat
@@ -166,9 +178,13 @@ if (!analysis) {
       max_tokens: 2000,
     });
     analysis = groqResult.choices[0]?.message?.content ?? undefined;
-    if (analysis) console.log("Succes cu Groq (Llama).");
+    if (analysis) {
+      console.log("Succes cu Groq (Llama).");
+    } else {
+      console.error("Groq a răspuns dar fără conținut:", JSON.stringify(groqResult));
+    }
   } catch (err: any) {
-    console.error("Eroare detaliată pentru Groq:", err?.message || err);
+    console.error("Eroare detaliată pentru Groq:", err?.response?.data || err?.message || err);
   }
 }
 
