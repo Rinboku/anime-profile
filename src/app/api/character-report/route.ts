@@ -162,15 +162,15 @@ for (const modelName of modelsToTry) {
 // Fallback final gratuit, dacă toate variantele Gemini au eșuat
 if (!analysis) {
   try {
-    console.log("Toate modelele Gemini au eșuat, se încearcă Groq (Llama)...");
+    console.log("Toate modelele Gemini au eșuat, se încearcă Groq (GPT-OSS)...");
     const groqResult = await groq.chat.completions.create({
-      model: "llama-3.3-70b-versatile",
+      model: "openai/gpt-oss-120b",
       messages: [{ role: "user", content: prompt }],
       max_tokens: 2000,
     });
     analysis = groqResult.choices[0]?.message?.content ?? undefined;
     if (analysis) {
-      console.log("Succes cu Groq (Llama).");
+      console.log("Succes cu Groq (GPT-OSS).");
     } else {
       console.error("Groq a răspuns dar fără conținut:", JSON.stringify(groqResult));
     }
