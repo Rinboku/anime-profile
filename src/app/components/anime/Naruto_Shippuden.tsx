@@ -1307,17 +1307,18 @@ const currentArcPercent = answeredByArc[arcIdx];
   const nextArc = CATALOG[arcIdx + 1];
   return (
     <ArcTransitionScreen
-      completedArcTitle={currentArc.title}
-      nextArcTitle={nextArc.title}
-      percentRemaining={100 - globalPercent}
-      accentColor={t.accentColor}
-      onContinue={() => {
-        setArcIdx(p => p + 1);
-        setEpIdx(0);
-        setSubIdx(0);
-        setShowArcTransition(false);
-      }}
-    />
+  completedArcTitle={currentArc.title}
+  nextArcTitle={nextArc.title}
+  percentRemaining={100 - globalPercent}
+  globalPercent={globalPercent} // Adaugă această linie
+  accentColor={t.accentColor}
+  onContinue={() => {
+    setArcIdx(p => p + 1);
+    setEpIdx(0);
+    setSubIdx(0);
+    setShowArcTransition(false);
+  }}
+/>
   );
 }
 
