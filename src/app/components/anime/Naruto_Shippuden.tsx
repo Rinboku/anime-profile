@@ -1238,6 +1238,11 @@ const TOTAL_ITEMS = CATALOG.reduce(
   ), 0
 );
 
+const ARC_ITEM_COUNTS = CATALOG.map(arc =>
+  arc.episodes.reduce(
+    (s, ep) => s + (ep.subscales?.reduce((ss, sub) => ss + sub.items.length, 0) ?? 0), 0
+  )
+);
 
 export default function NarutoQuiz({ onFinish, onBack, demographics }: NarutoQuizProps) {
   const [arcIdx,  setArcIdx]  = useState(0);
@@ -1270,9 +1275,32 @@ export default function NarutoQuiz({ onFinish, onBack, demographics }: NarutoQui
   const currentEp  = currentArc?.episodes[epIdx];
   const totalAnswered = Object.keys(responses).length;
   const globalPercent = (totalAnswered / TOTAL_ITEMS) * 100;
+  const ARC_ITEM_COUNTS = CATALOG.map(arc =>
+  arc.episodes.reduce(
+    (s, ep) => s + (ep.subscales?.reduce((ss, sub) => ss + sub.items.length, 0) ?? 0), 0
+  )
+);
   const hasSubscales = (currentEp?.subscales?.length ?? 0) > 0;
   const currentSub   = hasSubscales ? currentEp.subscales[subIdx] : null;
   const episodeImage = getEpisodeImage(currentEp?.title ?? '');
+  const answeredByArc = CATALOG.map((arc, i) => {
+  if (i > arcIdx) return 0;
+  if (i < arcIdx) return 100;
+  // arc curent: calculează procentul real din itemii răspunși în acest arc
+  const arcAnswered = Object.keys(responses).filter(key =>
+    arc.episodes.some(ep => key.startsWith(ep.title))
+  ).length;
+  return Math.min(100, (arcAnswered / ARC_ITEM_COUNTS[i]) * 100);
+});
+
+const arcTabs = CATALOG.map((arc, i) => ({
+  title: arc.title.replace(/^Arc \d+\s*-\s*/i, "").replace(/^ARC \d+\s*—\s*/i, ""),
+  percent: answeredByArc[i],
+  isCurrent: i === arcIdx,
+}));
+
+const currentArcPercent = answeredByArc[arcIdx];
+
 
   if (showArcTransition) {
   const nextArc = CATALOG[arcIdx + 1];
@@ -1432,7 +1460,7 @@ export default function NarutoQuiz({ onFinish, onBack, demographics }: NarutoQui
 
           <div className={`shrink-0 px-6 pt-4 pb-3 border-b ${t.headerBorder}`}>
        <div className="flex items-center gap-4">
-  <ProgressCrystal percent={globalPercent} accentColor={t.accentColor} />
+  <ProgressCrystal percent={currentArcPercent} accentColor={t.accentColor} />
   <div className="flex-1 min-w-0">
     <span className={`text-[10px] font-bold uppercase tracking-widest opacity-40 block ${t.labelColor}`}>
       {currentArc.title}

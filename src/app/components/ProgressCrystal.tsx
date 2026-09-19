@@ -13,14 +13,12 @@ export function ProgressCrystal({ percent, accentColor }: { percent: number; acc
           transform: `scale(${0.8 + glow * 0.4})`,
         }}
       />
-      <div
-        className="relative w-7 h-7 rotate-45 rounded-sm border-2 transition-all duration-500"
-        style={{
-          borderColor: accentColor,
-          backgroundColor: `${accentColor}${Math.round(20 + glow * 60).toString(16)}`,
-          boxShadow: `0 0 ${6 + glow * 14}px ${accentColor}`,
-        }}
-      />
+      <span
+        className="relative z-10 text-xs font-black"
+        style={{ color: accentColor }}
+      >
+        {Math.round(percent)}%
+      </span>
     </div>
   );
 }
