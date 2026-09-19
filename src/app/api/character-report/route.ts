@@ -136,7 +136,7 @@ Write a 1000-1300 word analysis in English that:
 
 Do not add a title or disclaimer, just the analysis text.`;
 
-const modelsToTry = ["gemini-3.6-flash", "gemini-3.0-flash"]; // update to verified-current model names
+const modelsToTry = ["gemini-3.6-flash", "gemini-3.7-flash", "gemini-3.8-flash"]; // update to verified-current model names
 let analysis: string | undefined;
 
 async function tryGeminiModel(modelName: string, prompt: string): Promise<string | undefined> {
