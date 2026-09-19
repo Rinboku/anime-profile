@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { LikertScale } from "../LikertScale";
 import { Need_For_Cognition_18 } from "@/app/psychometrics";
+import { ArcTransitionScreen } from "../ArcTransitionScreen";
+import { ProgressCrystal } from "../ProgressCrystal";
 
 
 interface QuizItem {
@@ -1230,10 +1232,19 @@ interface NarutoQuizProps {
   demographics?: DemographicPayload;
 }
 
+const TOTAL_ITEMS = CATALOG.reduce(
+  (sum, arc) => sum + arc.episodes.reduce(
+    (s, ep) => s + (ep.subscales?.reduce((ss, sub) => ss + sub.items.length, 0) ?? 0), 0
+  ), 0
+);
+
+
 export default function NarutoQuiz({ onFinish, onBack, demographics }: NarutoQuizProps) {
   const [arcIdx,  setArcIdx]  = useState(0);
   const [epIdx,   setEpIdx]   = useState(0);
   const [subIdx,  setSubIdx]  = useState(0);
+  const [showArcTransition, setShowArcTransition] = useState(false);
+
 
   // ── MODIFICAT: acceptă și string, pentru itemii de tip "text" ──────────
   const [responses, setResponses] = useState<Record<string, number | string>>({});
@@ -1257,9 +1268,29 @@ export default function NarutoQuiz({ onFinish, onBack, demographics }: NarutoQui
   const t = THEME;
   const currentArc = CATALOG[arcIdx];
   const currentEp  = currentArc?.episodes[epIdx];
+  const totalAnswered = Object.keys(responses).length;
+  const globalPercent = (totalAnswered / TOTAL_ITEMS) * 100;
   const hasSubscales = (currentEp?.subscales?.length ?? 0) > 0;
   const currentSub   = hasSubscales ? currentEp.subscales[subIdx] : null;
   const episodeImage = getEpisodeImage(currentEp?.title ?? '');
+
+  if (showArcTransition) {
+  const nextArc = CATALOG[arcIdx + 1];
+  return (
+    <ArcTransitionScreen
+      completedArcTitle={currentArc.title}
+      nextArcTitle={nextArc.title}
+      percentRemaining={100 - globalPercent}
+      accentColor={t.accentColor}
+      onContinue={() => {
+        setArcIdx(p => p + 1);
+        setEpIdx(0);
+        setSubIdx(0);
+        setShowArcTransition(false);
+      }}
+    />
+  );
+}
 
   if (!currentArc || !currentEp) {
     return (
@@ -1298,12 +1329,13 @@ export default function NarutoQuiz({ onFinish, onBack, demographics }: NarutoQui
         });
       }
     }
+    
     if (hasSubscales && subIdx < currentEp.subscales.length - 1) {
       setSubIdx(p => p + 1);
     } else if (epIdx < currentArc.episodes.length - 1) {
       setEpIdx(p => p + 1); setSubIdx(0);
     } else if (arcIdx < CATALOG.length - 1) {
-      setArcIdx(p => p + 1); setEpIdx(0); setSubIdx(0);
+      setShowArcTransition(true);
     } else {
       if (sessionId) {
         await finishSession(sessionId);
@@ -1316,6 +1348,8 @@ export default function NarutoQuiz({ onFinish, onBack, demographics }: NarutoQui
     arcIdx === CATALOG.length - 1 &&
     epIdx  === currentArc.episodes.length - 1 &&
     (!hasSubscales || subIdx === currentEp.subscales.length - 1);
+
+
 
   // ── INTRO PAGE (episod fara subscale) ────────────────────────────────
    if (!hasSubscales) {
@@ -1397,19 +1431,20 @@ export default function NarutoQuiz({ onFinish, onBack, demographics }: NarutoQui
         <div className="flex-1 flex flex-col overflow-hidden">
 
           <div className={`shrink-0 px-6 pt-4 pb-3 border-b ${t.headerBorder}`}>
-            <div className="flex items-center gap-4">
-              <div className="flex-1 min-w-0">
-                <span className={`text-[10px] font-bold uppercase tracking-widest opacity-40 block ${t.labelColor}`}>
-                  {currentArc.title}
-                </span>
-                <h2 className={`text-sm font-black uppercase truncate ${t.text}`}>
-                  {currentSub.label}
-                </h2>
-              </div>
-              <span className={`text-xs font-bold shrink-0 ${t.subText}`}>
-                {answeredCount}/{currentSub.items.length}
-              </span>
-            </div>
+       <div className="flex items-center gap-4">
+  <ProgressCrystal percent={globalPercent} accentColor={t.accentColor} />
+  <div className="flex-1 min-w-0">
+    <span className={`text-[10px] font-bold uppercase tracking-widest opacity-40 block ${t.labelColor}`}>
+      {currentArc.title}
+    </span>
+    <h2 className={`text-sm font-black uppercase truncate ${t.text}`}>
+      {currentSub.label}
+    </h2>
+  </div>
+  <span className={`text-xs font-bold shrink-0 ${t.subText}`}>
+    {answeredCount}/{currentSub.items.length}
+  </span>
+</div>
 
             <div className="mt-3 h-1 rounded-full overflow-hidden bg-white/10">
               <div
