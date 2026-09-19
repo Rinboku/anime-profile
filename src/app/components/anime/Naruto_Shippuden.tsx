@@ -6,6 +6,7 @@ import { LikertScale } from "../LikertScale";
 import { Need_For_Cognition_18 } from "@/app/psychometrics";
 import { ArcTransitionScreen } from "../ArcTransitionScreen";
 import { ProgressCrystal } from "../ProgressCrystal";
+import { ArcSideTabs } from "../ArcSideTabs";
 
 
 interface QuizItem {
@@ -1383,9 +1384,11 @@ const currentArcPercent = answeredByArc[arcIdx];
    if (!hasSubscales) {
     return (
       <div
-        className={`w-full h-full flex flex-col md:flex-row overflow-hidden ${t.bg}`}
+        className={`relative w-full h-full flex flex-col md:flex-row overflow-hidden ${t.bg}`}
         style={{ fontFamily: t.fontFamily }}
       >
+        <ArcSideTabs tabs={arcTabs} accentColor={t.accentColor} />
+
         <div className="relative w-full md:w-2/5 h-48 md:h-full flex items-end justify-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0B1218]/60 z-10 hidden md:block" />
           <div className="relative w-full h-[95%] max-w-sm">
