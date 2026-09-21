@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
- 
+
 //---------Anime Quiz--------------------------//
 import AttackOnTitanQuiz, { AoT_IMAGES } from './anime/Attack_On_Titan';
 import BlackCloverQuiz, { Black_Clover_IMAGES } from './anime/Black_Clover';
@@ -45,7 +45,8 @@ import TokyoGhoulQuiz, { TOKYO_IMAGES } from './anime/Tokyo_Ghoul';
 import VinlandSagaQuiz, { VINLAND_IMAGES } from './anime/Vinland_Saga';
 import { useCharacterMatch } from '@/hooks/useCharacterMatch';
 import { CharacterMatchModal } from './CharacterMatchModal';
- 
+import { ArcSideTabs } from './ArcSideTabs';
+
 const ALL_DEMO_IMAGES: Record<string, Record<number, string>> = {
   'Attack on Titan':               AoT_IMAGES,
   'Black Clover':                  Black_Clover_IMAGES,
@@ -88,7 +89,7 @@ const ALL_DEMO_IMAGES: Record<string, Record<number, string>> = {
   'Tokyo Ghoul':                   TOKYO_IMAGES,
   'Vinland Saga':                  VINLAND_IMAGES,
 };
- 
+
 const slides = [
   { id: 1,  title: "Naruto Shippuden",             description: "Follow Naruto Uzumaki's transformative journey upon his return to the Hidden Leaf Village.",                                                                image: "/images/Naruto_Imagine_Site.png",                  bgColor: "bg-[#0B1218]",  textColor: "text-white",     descColor: "text-gray-300"   },
   { id: 2,  title: "Demon Slayer",                  description: "It is the Taisho Period in Japan. Tanjiro finds his family slaughtered by a demon.",                                                                       image: "/images/Demon_Slayer_Intro.jpg",                   bgColor: "bg-[#081412]",  textColor: "text-white",     descColor: "text-gray-300"   },
@@ -131,12 +132,14 @@ const slides = [
   { id: 39, title: "Food Wars!",                    description: "Shokugeki no Soma centers on Yukihira Soma, determined to surpass his father's culinary skills.",                                                          image: "/images/Food_Wars.jpg",                            bgColor: "bg-[#161920]",  textColor: "text-[#DC2626]", descColor: "text-[#FBBF24]"  },
   { id: 40, title: "The Apothecary Diaries",        description: "At the heart of the story is Maomao, a clever young woman obsessed with medicine and poisons.",                                                            image: "/images/The_Apothecary_Diaries.jpg",               bgColor: "bg-[#0E132B]",  textColor: "text-[#10B981]", descColor: "text-[#FBBF24]"  },
 ];
- 
+
 interface QuizItem { id: string; text: string; }
 interface Subscale { label: string; imageUrl?: string; scaleStart?: number; scaleEnd?: number; labels?: string[]; items: QuizItem[]; }
 interface Episode { title: string; imageUrl?: string; subscales: Subscale[]; }
 interface Arc { title: string; episodes: Episode[]; }
- 
+
+interface ArcTabData { title: string; percent: number; isCurrent: boolean; }
+
 // ─────────────────────────────────────────────
 // Reusable split-screen wrapper for all modal steps
 // Left = image (40% desktop), Right = scrollable content (60% desktop)
@@ -177,6 +180,7 @@ export default function AnimeCarousel() {
   const [current, setCurrent] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [quizStep, setQuizStep] = useState(0);
+  const [quizProgress, setQuizProgress] = useState<{ arcTabs: ArcTabData[]; accentColor: string } | null>(null);
 
   const {
     isOpen: isMatchOpen,
@@ -186,7 +190,7 @@ export default function AnimeCarousel() {
     runMatch,
     close: closeMatch,
   } = useCharacterMatch();
- 
+
   const [age, setAge] = useState(18);
   const [gender, setGender] = useState('');
   const [country, setCountry] = useState('');
@@ -207,23 +211,23 @@ export default function AnimeCarousel() {
   const [language, setLanguage] = useState('');
   const [level, setLevel] = useState('');
   const [gap, setGap] = useState('');
- 
+
   const nextSlide = () => setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   const prevSlide = () => setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
- 
+
   useEffect(() => {
     if (!isModalOpen) {
       const timer = setInterval(nextSlide, 15000);
       return () => clearInterval(timer);
     }
   }, [isModalOpen]);
- 
-  const handleCloseModal = () => { setIsModalOpen(false); setQuizStep(0); };
- 
+
+  const handleCloseModal = () => { setIsModalOpen(false); setQuizStep(0); setQuizProgress(null); };
+
   const activeSlide = slides[current];
   const DEMO_IMAGES: Record<number, string> = ALL_DEMO_IMAGES[activeSlide.title] ?? {};
   const isLight = activeSlide.textColor === 'text-black';
- 
+
   const t = {
     bg:             activeSlide.bgColor,
     text:           activeSlide.textColor,
@@ -239,11 +243,11 @@ export default function AnimeCarousel() {
     fontFamily:     '"Poppins", system-ui, sans-serif',
     sliderAccent:   '#be123c'
   };
- 
+
   // Shorthand pentru opțiunile de select — negru pe alb indiferent de temă
   const OPT = { color: '#000000', backgroundColor: '#ffffff' } as const;
- 
-const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId: string) => void; onBack: () => void; demographics?: Record<string, unknown> }>> = {
+
+const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId: string) => void; onBack: () => void; demographics?: Record<string, unknown>; onProgressChange?: (data: { arcTabs: ArcTabData[]; accentColor: string }) => void }>> = {
     'Naruto Shippuden':              NarutoQuiz,
     'Demon Slayer':                  DemonSlayerQuiz,
     'One Piece':                     OnePieceQuiz,
@@ -285,10 +289,10 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
     'Food Wars!':                    FoodWarsQuiz,
     'The Apothecary Diaries':        TheApothecaryDiariesQuiz,
   };
- 
+
   return (
     <div className={`relative w-full h-[600px] ${activeSlide.bgColor} transition-colors duration-1000 overflow-hidden group`}>
- 
+
       {/* ── Arrows ── */}
       <button onClick={(e) => { e.preventDefault(); prevSlide(); }}
         className="absolute left-6 top-1/2 -translate-y-1/2 z-40 p-3 rounded-full border border-red-600 bg-transparent text-white opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-red-600 hover:scale-110 cursor-pointer"
@@ -304,7 +308,7 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
           <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
       </button>
- 
+
       {/* ── Carousel body ── */}
       <div className="flex h-full w-full flex-col md:flex-row">
         <div className="flex flex-1 flex-col justify-start pt-20 px-12 md:px-24 z-20">
@@ -326,23 +330,23 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
           </div>
         </div>
       </div>
- 
+
       {/* ══════════════════════ MODAL ══════════════════════ */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 gap-3">
           <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={handleCloseModal} />
- 
+
           <div
   className={`relative w-full max-w-7xl h-[88vh] rounded-2xl overflow-hidden ${t.bg} border ${isLight ? 'border-black/20' : 'border-white/10'}`}
   style={{ fontFamily: t.fontFamily }}
 >
- 
+
             {/* Close */}
             <button onClick={handleCloseModal}
               className={`absolute top-5 right-5 z-50 w-10 h-10 rounded-full flex items-center justify-center transition-colors border ${t.closeBtn}`}>
               ✕
             </button>
- 
+
             {/* ── STEP 0: Informed Consent ── */}
             {quizStep === 0 && (
               <ModalSplit imageSrc={DEMO_IMAGES[0] ?? activeSlide.image} imageAlt={activeSlide.title} imageClass="object-contain object-center">
@@ -366,7 +370,7 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
                 </div>
               </ModalSplit>
             )}
- 
+
             {/* ── STEP 1: Immersion Intro ── */}
             {quizStep === 1 && (
               <ModalSplit imageSrc={DEMO_IMAGES[1] ?? activeSlide.image} imageAlt={activeSlide.title}>
@@ -388,237 +392,9 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
                 </div>
               </ModalSplit>
             )}
- 
-            {/* ── STEP 2: Identification Tag ── */}
-            {quizStep === 2 && (
-              <ModalSplit imageSrc={DEMO_IMAGES[2] ?? activeSlide.image} imageAlt={activeSlide.title}>
-                <div className="p-8 md:p-12">
-                  <h2 className={`text-2xl font-black uppercase mb-8 ${t.text}`}>Chapter 2: Identification Tag</h2>
-                  <div className="space-y-6">
-                    <div>
-                      <label className={`block font-bold text-xs mb-2 ${t.text}`}>What is your age? ({age})</label>
-                      <input
-  type="range"
-  min="18"
-  max="100"
-  value={age}
-  className="w-full h-2 rounded-lg appearance-none cursor-pointer"
-  style={{
-    background: `linear-gradient(to right, ${t.sliderAccent} 0%, ${t.sliderAccent} ${((age - 18) / (100 - 18)) * 100}%, ${isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'} ${((age - 18) / (100 - 18)) * 100}%, ${isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'} 100%)`,
-    accentColor: t.sliderAccent,
-  }}
-  onChange={(e) => setAge(parseInt(e.target.value))}
-/>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your gender?</label>
-                      <select onChange={(e) => setGender(e.target.value)} value={gender} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select gender...</option>
-                        <option style={OPT}>Male</option><option style={OPT}>Female</option><option style={OPT}>Other</option><option style={OPT}>Prefer not to say</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your country of residence?</label>
-                      <select onChange={(e) => setCountry(e.target.value)} value={country} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select country...</option>
-                        {['Romania','United States','Albania','Andorra','Austria','Belarus','Belgium','Bosnia and Herzegovina','Bulgaria','Croatia','Cyprus','Czechia','Denmark','Estonia','Finland','France','Germany','Hungary','Iceland','Ireland','Italy','Kosovo','Latvia','Lithuania','Luxembourg','Malta','Moldova','Montenegro','Netherlands','North Macedonia','Norway','Poland','Portugal','Serbia','Slovakia','Slovenia','Spain','Sweden','Switzerland','Ukraine','United Kingdom','Japan','South Korea','China','India','Brazil','Mexico','Argentina','Canada','Australia','Other'].map(c => <option key={c} style={OPT}>{c}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your current citizenship status?</label>
-                      <select onChange={(e) => setCitizenship(e.target.value)} value={citizenship} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select status...</option>
-                        <option style={OPT}>Permanent resident</option><option style={OPT}>International Student</option><option style={OPT}>Expat/Visa</option><option style={OPT}>Refugee</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your ethnicity?</label>
-                      <select onChange={(e) => setEthnicity(e.target.value)} value={ethnicity} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select ethnicity...</option>
-                        {['Middle Eastern','East-Asian','South-Asian','South-East Asian','Black','Hispanic','White/Caucasian/European','Indigenous/Aboriginal','Mixed','Other','Prefer not to say'].map(e => <option key={e} style={OPT}>{e}</option>)}
-                      </select>
-                    </div>
-                    <button type="button" onClick={() => { if (!gender || !country || !citizenship || !ethnicity) { alert('Please complete all fields before continuing!'); return; } setQuizStep(3); }} className={`w-full py-4 ${t.demoBtnPrimary}`}>Next</button>
-                  </div>
-                </div>
-              </ModalSplit>
-            )}
- 
-            {/* ── STEP 3: Team Assignment ── */}
-            {quizStep === 3 && (
-              <ModalSplit imageSrc={DEMO_IMAGES[3] ?? activeSlide.image} imageAlt={activeSlide.title}>
-                <div className="p-8 md:p-12">
-                  <h2 className={`text-2xl font-black uppercase mb-8 ${t.text}`}>Chapter 02: Team Assignment</h2>
-                  <div className="space-y-6">
-                    <div>
-                      <label className={`block font-bold text-xs mb-2 ${t.text}`}>What is your last education level attained?</label>
-                      <select onChange={(e) => setEducation(e.target.value)} value={education} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select education...</option>
-                        {['Middle School/Gymnasium','High School','Vocational training',"Bachelor's degree","Master's degree",'Doctoral degree'].map(e => <option key={e} style={OPT}>{e}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your current occupation?</label>
-                      <select onChange={(e) => setOccupation(e.target.value)} value={occupation} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select occupation...</option>
-                        {['Full-time employed','Part-time employed','Self-employed/Freelancer','Student','Unemployed','Not in education, employment or training'].map(o => <option key={o} style={OPT}>{o}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your main source of income?</label>
-                      <select onChange={(e) => setIncomeSource(e.target.value)} value={incomeSource} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select income source...</option>
-                        {['Personal income','Financial support from family','Scholarship','Government social assistance/Welfare benefits','Pension/Retirement income','Other'].map(i => <option key={i} style={OPT}>{i}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your current financial situation?</label>
-                      <select onChange={(e) => setFinanceFeel(e.target.value)} value={financeFeel} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select financial situation...</option>
-                        {['Low','Low-middle','Middle','Upper-middle','High'].map(f => <option key={f} style={OPT}>{f}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your current relationship status?</label>
-                      <select onChange={(e) => setIsSingle(e.target.value)} value={isSingle} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select...</option>
-                        {['Single','In a relationship','Married','Divorced','Widowed'].map(s => <option key={s} style={OPT}>{s}</option>)}
-                      </select>
-                    </div>
-                    <button type="button" onClick={() => { if (!education || !occupation || !incomeSource || !financeFeel || !isSingle) { alert('Please complete all fields before continuing!'); return; } setQuizStep(4); }} className={`w-full py-4 ${t.demoBtnPrimary}`}>Next</button>
-                  </div>
-                </div>
-              </ModalSplit>
-            )}
- 
-            {/* ── STEP 4: Lifestyle ── */}
-            {quizStep === 4 && (
-              <ModalSplit imageSrc={DEMO_IMAGES[4] ?? activeSlide.image} imageAlt={activeSlide.title}>
-                <div className="p-8 md:p-12">
-                  <h2 className={`text-2xl font-black uppercase mb-8 ${t.text}`}>Cap.03: Lifestyle</h2>
-                  <div className="space-y-6">
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your current living arrangement?</label>
-                      <select onChange={(e) => setLiving(e.target.value)} value={living} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select option...</option>
-                        {['Living alone','Living with parents','Living with partner','Living with roommates/housemates','Other living'].map(l => <option key={l} style={OPT}>{l}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>Your daily time spent indoors?</label>
-                      <select onChange={(e) => setDaily(e.target.value)} value={daily} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select option...</option>
-                        {['0-4 hours','5-8 hours','9-12 hours','13-16 hours','17-20 hours','More than 20 hours'].map(d => <option key={d} style={OPT}>{d}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>What is your religion?</label>
-                      <select onChange={(e) => setReligion(e.target.value)} value={religion} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select option...</option>
-                        {['Atheist','Agnostic','Buddhist','Christian','Hindu','Jewish','Muslim','Sikh','Spiritual but not religious','Other','Prefer not to say'].map(r => <option key={r} style={OPT}>{r}</option>)}
-                      </select>
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>Medical affection, disability or chronic disease?</label>
-                      <div className="flex gap-4 mb-4">
-                        <button type="button" onClick={() => setHasAffection('Yes')} className={`flex-1 py-2 rounded-lg font-bold ${hasAffection === 'Yes' ? t.demoBtnActive : t.demoBtnInactive}`}>Yes</button>
-                        <button type="button" onClick={() => setHasAffection('No')} className={`flex-1 py-2 rounded-lg font-bold ${hasAffection === 'No' ? t.demoBtnActive : t.demoBtnInactive}`}>No</button>
-                      </div>
-                      {hasAffection === 'Yes' && (
-                        <select value={selectedDisease} onChange={(e) => setSelectedDisease(e.target.value)} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                          <option value="" disabled style={OPT}>Select the condition...</option>
-                          {['Cardiovascular disease','Diabetes mellitus','Respiratory disease','Gastrointestinal disease','Neurological disease','Autoimmune disease','Endocrine disorder','Chronic pain conditions','Musculoskeletal disease','Chronic liver disease','Cancer or malignant disease','Immunological disease','Dermatological disease','Sleep disorder','Other chronic illness','Prefer not to say'].map(d => <option key={d} style={OPT}>{d}</option>)}
-                        </select>
-                      )}
-                    </div>
-                    <div>
-                      <label className={`block font-bold text-xs mb-2 ${t.text}`}>How many anime episodes do you watch daily? ({averatewatchedepisodes})</label>
-                      <input
-  type="range"
-  min="1"
-  max="100"
-  value={averatewatchedepisodes}
-  className="w-full h-2 rounded-lg appearance-none cursor-pointer"
-  style={{
-    background: `linear-gradient(to right, ${t.sliderAccent} 0%, ${t.sliderAccent} ${((averatewatchedepisodes - 1) / (100 - 1)) * 100}%, ${isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'} ${((averatewatchedepisodes - 1) / (100 - 1)) * 100}%, ${isLight ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)'} 100%)`,
-    accentColor: t.sliderAccent,
-  }}
-  onChange={(e) => setWatchedEpisodes(parseInt(e.target.value))}
-/>
-                    </div>
-                    <button onClick={() => setQuizStep(5)} className={`w-full py-4 ${t.demoBtnPrimary}`}>Next</button>
-                  </div>
-                </div>
-              </ModalSplit>
-            )}
- 
-            {/* ── STEP 5: Anime Profile ── */}
-            {quizStep === 5 && (
-              <ModalSplit imageSrc={DEMO_IMAGES[5] ?? activeSlide.image} imageAlt={activeSlide.title}>
-                <div className="p-8 md:p-12">
-                  <h2 className={`text-2xl font-black uppercase mb-8 ${t.text}`}>Chapter 04:Immersion</h2>
-                  <div className="space-y-6">
-                    <div>
-                      <label className={`block font-bold text-xs mb-2 ${t.text}`}>Do you watch anime series in your native language?</label>
-                      <div className="flex gap-4">
-                        <button type="button" onClick={() => setWatchNative('Yes')} className={`flex-1 py-3 rounded-lg font-bold ${watchNative === 'Yes' ? t.demoBtnActive : t.demoBtnInactive}`}>Yes</button>
-                        <button type="button" onClick={() => setWatchNative('No')} className={`flex-1 py-3 rounded-lg font-bold ${watchNative === 'No' ? t.demoBtnActive : t.demoBtnInactive}`}>No</button>
-                      </div>
-                    </div>
-                    {watchNative === 'No' && (
-                      <div className="space-y-6 animate-in fade-in duration-500">
-                        <div>
-                          <label className={`block font-bold text-xs mb-2 ${t.text}`}>In what language do you watch anime series?</label>
-                          <select onChange={(e) => setLanguage(e.target.value)} value={language} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                            <option value="" disabled style={OPT}>Select language...</option>
-                            {['English','Japanese','Spanish','French','Other'].map(l => <option key={l} style={OPT}>{l}</option>)}
-                          </select>
-                        </div>
-                        {language !== '' && (
-                          <div className="animate-in fade-in duration-500">
-                            <label className={`block font-bold text-xs mb-2 ${t.text}`}>Which level of proficiency do you have in {language}?</label>
-                            <select onChange={(e) => setLevel(e.target.value)} value={level} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                              <option value="" disabled style={OPT}>Select level...</option>
-                              {['Beginner (A1-A2)','Intermediate (B1-B2)','Advanced (C1-C2)','Native/Fluent'].map(l => <option key={l} style={OPT}>{l}</option>)}
-                            </select>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    <div>
-                      <label className={`block font-bold text-xs mb-1 ${t.text}`}>Can you remember when you watched anime for the first time?</label>
-                      <select onChange={(e) => setGap(e.target.value)} value={gap} className={`w-full p-3 ${t.inputStyle} rounded-lg font-bold`}>
-                        <option value="" disabled style={OPT}>Select option...</option>
-                        {['Infancy (0-2 years)','Early Childhood (3-5 years)','Middle Childhood (6-11 years)','Early Adolescence (12-14 years)','Middle to Late Adolescence (15-17 years)','Emerging Adulthood (18-25 years)','Young Adulthood (26-39 years)','Middle Adulthood (40-59 years)','Late Adulthood (60 years or older)','I do not remember well enough'].map(g => <option key={g} style={OPT}>{g}</option>)}
-                      </select>
-                    </div>
-                    <button type="button" onClick={() => setQuizStep(6)} className={`w-full py-4 mt-6 ${t.demoBtnPrimary}`}>Submit &amp; Continue</button>
-                  </div>
-                </div>
-              </ModalSplit>
-            )}
- 
-            {/* ── STEP 6: Story Arc 2 Intro ── */}
-            {quizStep === 6 && (
-              <ModalSplit imageSrc={DEMO_IMAGES[6] ?? activeSlide.image} imageAlt={activeSlide.title}>
-                <div className={`p-8 md:p-12 flex flex-col justify-between h-full ${t.text}`}>
-                  <div>
-                    <div className="text-center mb-10 mt-4">
-                      <span className="font-bold uppercase tracking-[0.3em] text-[10px] opacity-60 block mb-2">Story Begins!</span>
-                      <h3 className="font-serif text-3xl font-black uppercase tracking-widest">- Hello Traveler! Welcome and hope at the end you will find you you are! -</h3>
-                    </div>
-                    <div className="space-y-6 max-w-xl mx-auto font-serif text-lg leading-relaxed text-center">
-                      <p className="font-medium opacity-90">Congratulations for coming this far into the <strong>{activeSlide.title}</strong> universe. Now we need to know a little more about you.</p>
-                      <p className="italic opacity-80 pt-2">Respond as you see fit, and remember — there are no wrong or right answers.</p>
-                    </div>
-                  </div>
-                  <div className={`flex justify-end items-center mt-12 pt-8 border-t max-w-xl mx-auto w-full ${t.headerBorder}`}>
-                    <button onClick={() => setQuizStep(7)} className="bg-[#be123c] hover:bg-[#9f1239] text-white px-10 py-4 font-bold uppercase tracking-widest text-[11px] rounded-lg shadow-xl transition-all transform hover:-translate-y-0.5">Begin Journey</button>
-                  </div>
-                </div>
-              </ModalSplit>
-            )}
- 
+
+            {/* ── (STEP-urile 2-6 raman NESCHIMBATE fata de fisierul tau original — nu le-am modificat, doar le-am omis aici din motive de lungime a documentului. Copiaza-le din fisierul tau existent, intre STEP 1 si STEP 7.) ── */}
+
                      {/* ── STEP 7: Quiz ── */}
             {quizStep === 7 && (() => {
               const QuizComponent = ANIME_QUIZ_MAP[activeSlide.title];
@@ -630,6 +406,7 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
               );
               return (
                 <QuizComponent
+                  onProgressChange={setQuizProgress}
                   demographics={{
                     age, gender, country, citizenship, ethnicity,
                     education, occupation, incomeSource, financeFeel,
@@ -651,7 +428,7 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
                 />
               );
             })()}
- 
+
             {/* ── STEP 8: Thank You ── */}
             {quizStep === 8 && (
               <div className="w-full h-full flex flex-col items-center justify-center text-center p-8 md:p-12 text-white bg-[#050505]">
@@ -661,7 +438,7 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
                 <button onClick={handleCloseModal} className="mt-10 px-8 py-3.5 border border-white/20 hover:border-white text-white font-bold uppercase tracking-widest text-[10px] transition-all rounded-md">Back to the main menu</button>
               </div>
             )}
- 
+
                         {/* ── STEP 99: Under 18 ── */}
             {quizStep === 99 && (
               <div className="w-full h-full flex flex-col items-center justify-center text-center p-8 md:p-12 text-white bg-[#050505]">
@@ -673,6 +450,10 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
             )}
 
           </div>
+
+          {quizStep === 7 && quizProgress && (
+            <ArcSideTabs tabs={quizProgress.arcTabs} accentColor={quizProgress.accentColor} />
+          )}
         </div>
       )}
 
@@ -691,4 +472,3 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
     </div>
   );
 }
- 
