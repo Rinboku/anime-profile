@@ -11,7 +11,7 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 // Pune în Netlify variabila GEMINI_MODEL cu un nume verificat în Google AI Studio.
-const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
+const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-3.8-flash";
 
 const TOTAL_BUDGET_MS = 24000; // sub limita de 30s a platformei
 const GEMINI_TIMEOUT_MS = 12000;
