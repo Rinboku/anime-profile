@@ -5,11 +5,102 @@ import { prisma } from "@/lib/prisma";
 import { VECTOR_KEY_ORDER } from "@/data/vectorKeyOrder";
 import { getFallbackAnalysis } from "@/data/fallbackDescriptions";
 
+export const maxDuration = 30;
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
+// Pune în Netlify variabila GEMINI_MODEL cu un nume verificat în Google AI Studio.
+const GEMINI_MODEL = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
+
+const TOTAL_BUDGET_MS = 24000; // sub limita de 30s a platformei
+const GEMINI_TIMEOUT_MS = 12000;
+
+function withTimeout<T>(p: Promise<T>, ms: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout>;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`Timeout ${label} după ${ms}ms`)), ms);
+  });
+  return Promise.race([p, timeout]).finally(() => clearTimeout(timer));
+}
+
+const TRAIT_LABELS: Record<string, string> = {
+  machiavellianism: "Machiavellianism",
+  narcissism: "Narcissism",
+  psychopathy: "Psychopathy",
+  sadism: "Sadism",
+  extraversion: "Extraversion",
+  agreeableness: "Agreeableness",
+  conscientiousness: "Conscientiousness",
+  neuroticism: "Neuroticism",
+  openness: "Openness",
+  premeditation: "Premeditation",
+  urgency_negative: "Negative Urgency",
+  sensation_seeking: "Sensation Seeking",
+  urgency_positive: "Positive Urgency",
+  need_for_cognition: "Need for Cognition",
+  cognitive_reflection: "Cognitive Reflection",
+  maladaptive_daydreaming: "Maladaptive Daydreaming",
+  self_blame_cerq: "Self-Blame",
+  acceptance_cerq: "Acceptance",
+  rumination: "Rumination",
+  positive_refocusing: "Positive Refocusing",
+  refocus_planning: "Refocusing on Planning",
+  positive_reappraisal: "Positive Reappraisal",
+  putting_into_perspective: "Putting into Perspective",
+  catastrophizing: "Catastrophizing",
+  other_blame: "Blaming Others",
+  cognitive_reappraisal: "Cognitive Reappraisal",
+  expressive_suppression: "Expressive Suppression",
+  self_distraction: "Self-Distraction",
+  active_coping: "Active Coping",
+  denial: "Denial",
+  substance_use_coping: "Substance-Based Coping",
+  humor_coping: "Humor as Coping",
+  emotional_support_seeking: "Seeking Emotional Support",
+  instrumental_support_seeking: "Seeking Practical Support",
+  behavioral_disengagement: "Behavioral Disengagement",
+  venting: "Venting",
+  positive_reframing: "Positive Reframing",
+  planning_coping: "Planning",
+  acceptance_coping: "Acceptance",
+  religion_coping: "Religious Coping",
+  self_blame_coping: "Self-Blame",
+  psychological_pain: "Psychological Pain",
+  depression: "Depression",
+  stress: "Stress",
+  anxiety: "Anxiety",
+  anhedonia: "Anhedonia",
+  self_esteem: "Self-Esteem",
+  life_satisfaction: "Life Satisfaction",
+  boredom_global: "Boredom Proneness",
+  autonomy: "Autonomy",
+  competence: "Competence",
+  relatedness: "Relatedness",
+  forgiveness_self: "Self-Forgiveness",
+  forgiveness_others: "Forgiveness of Others",
+  forgiveness_situations: "Forgiveness of Situations",
+  self_kindness: "Self-Kindness",
+  self_judgment: "Self-Judgment",
+  common_humanity_self: "Common Humanity",
+  isolation: "Isolation",
+  mindfulness: "Mindfulness",
+  over_identification: "Over-Identification",
+  compassion_coldness: "Emotional Coldness",
+  common_humanity_others: "Compassion for Others",
+  compassion_in_action: "Compassion in Action",
+  self_expansion: "Self-Expansion through Escapism",
+  self_suppression: "Self-Suppression through Escapism",
+  benevolent_childhood_experiences: "Positive Childhood Experiences",
+  social_withdrawal: "Social Withdrawal",
+  social_anxiety: "Social Anxiety",
+  social_avoidance: "Social Avoidance",
+  need_to_belong: "Need to Belong",
+};
+
 export async function POST(req: Request) {
-  const { sessionId, character, similarity, dimensionsCompared, normalizedTraits } = await req.json();
+  const START = Date.now();
+  const { sessionId, character, similarity, normalizedTraits } = await req.json();
 
   if (!sessionId || !character || !normalizedTraits) {
     return NextResponse.json({ error: "Missing Data." }, { status: 400 });
@@ -29,80 +120,6 @@ export async function POST(req: Request) {
       characterTraits[key] = fullCharacter.vector[i];
     });
 
-       const TRAIT_LABELS: Record<string, string> = {
-      machiavellianism: "Machiavellianism",
-      narcissism: "Narcissism",
-      psychopathy: "Psychopathy",
-      sadism: "Sadism",
-      extraversion: "Extraversion",
-      agreeableness: "Agreeableness",
-      conscientiousness: "Conscientiousness",
-      neuroticism: "Neuroticism",
-      openness: "Openness",
-      premeditation: "Premeditation",
-      urgency_negative: "Negative Urgency",
-      sensation_seeking: "Sensation Seeking",
-      urgency_positive: "Positive Urgency",
-      need_for_cognition: "Need for Cognition",
-      cognitive_reflection: "Cognitive Reflection",
-      maladaptive_daydreaming: "Maladaptive Daydreaming",
-      self_blame_cerq: "Self-Blame",
-      acceptance_cerq: "Acceptance",
-      rumination: "Rumination",
-      positive_refocusing: "Positive Refocusing",
-      refocus_planning: "Refocusing on Planning",
-      positive_reappraisal: "Positive Reappraisal",
-      putting_into_perspective: "Putting into Perspective",
-      catastrophizing: "Catastrophizing",
-      other_blame: "Blaming Others",
-      cognitive_reappraisal: "Cognitive Reappraisal",
-      expressive_suppression: "Expressive Suppression",
-      self_distraction: "Self-Distraction",
-      active_coping: "Active Coping",
-      denial: "Denial",
-      substance_use_coping: "Substance-Based Coping",
-      humor_coping: "Humor as Coping",
-      emotional_support_seeking: "Seeking Emotional Support",
-      instrumental_support_seeking: "Seeking Practical Support",
-      behavioral_disengagement: "Behavioral Disengagement",
-      venting: "Venting",
-      positive_reframing: "Positive Reframing",
-      planning_coping: "Planning",
-      acceptance_coping: "Acceptance",
-      religion_coping: "Religious Coping",
-      self_blame_coping: "Self-Blame",
-      psychological_pain: "Psychological Pain",
-      depression: "Depression",
-      stress: "Stress",
-      anxiety: "Anxiety",
-      anhedonia: "Anhedonia",
-      self_esteem: "Self-Esteem",
-      life_satisfaction: "Life Satisfaction",
-      boredom_global: "Boredom Proneness",
-      autonomy: "Autonomy",
-      competence: "Competence",
-      relatedness: "Relatedness",
-      forgiveness_self: "Self-Forgiveness",
-      forgiveness_others: "Forgiveness of Others",
-      forgiveness_situations: "Forgiveness of Situations",
-      self_kindness: "Self-Kindness",
-      self_judgment: "Self-Judgment",
-      common_humanity_self: "Common Humanity",
-      isolation: "Isolation",
-      mindfulness: "Mindfulness",
-      over_identification: "Over-Identification",
-      compassion_coldness: "Emotional Coldness",
-      common_humanity_others: "Compassion for Others",
-      compassion_in_action: "Compassion in Action",
-      self_expansion: "Self-Expansion through Escapism",
-      self_suppression: "Self-Suppression through Escapism",
-      benevolent_childhood_experiences: "Positive Childhood Experiences",
-      social_withdrawal: "Social Withdrawal",
-      social_anxiety: "Social Anxiety",
-      social_avoidance: "Social Avoidance",
-      need_to_belong: "Need to Belong",
-    };
-
     const topShared = VECTOR_KEY_ORDER
       .filter((key) => normalizedTraits[key] !== undefined)
       .map((key) => ({
@@ -114,10 +131,11 @@ export async function POST(req: Request) {
       .sort((a, b) => a.diff - b.diff)
       .slice(0, 10);
 
-        const traitList = topShared.map(t => t.trait).join(", ");
- const characterContext = fullCharacter.description
-      ? `/nHere is verified background information about ${fullCharacter.name} — use ONLY this as your factual source for the character's story, traits, and moments. Do not invent plot details beyond what is stated or reasonably inferred here:\n"${fullCharacter.description}"\n`
-      : `/nNote: no verified background is available for this character. Keep story references general and avoid inventing specific plot events or moments.\n`;
+    const traitList = topShared.map((t) => t.trait).join(", ");
+
+    const characterContext = fullCharacter.description
+      ? `\nHere is verified background information about ${fullCharacter.name} — use ONLY this as your factual source for the character's story, traits, and moments. Do not invent plot details beyond what is stated or reasonably inferred here:\n"${fullCharacter.description}"\n`
+      : `\nNote: no verified background is available for this character. Keep story references general and avoid inventing specific plot events or moments.\n`;
 
     const prompt = `You are a thoughtful writer producing a personalized narrative report for a participant in a doctoral research study on personality and anime culture.
 
@@ -127,7 +145,7 @@ ${characterContext}
 
 The psychological dimensions where the participant's profile aligns most closely with ${fullCharacter.name} are: ${traitList}.
 
-Write a 1000-1300 word analysis in English that:
+Write a 500-700 word analysis in English that:
 1. Focuses primarily on STORYTELLING, not statistics. Do not mention percentages, scores, numbers, or technical psychological terminology (e.g. do not say "cosine similarity", "scored 0.50", or list raw trait names mechanically).
 2. Draws on specific, memorable moments, arcs, or turning points from ${fullCharacter.name}'s journey in the anime that illustrate the shared traits listed above, and uses those story moments as the main vehicle for explaining the resemblance to the participant.
 3. Weaves the psychological dimensions into the narrative naturally and conversationally (e.g. "like [Character], you seem to process setbacks by..." rather than listing trait names directly).
@@ -137,68 +155,67 @@ Write a 1000-1300 word analysis in English that:
 
 Do not add a title or disclaimer, just the analysis text.`;
 
-const modelsToTry = ["gemini-3.6-flash", "gemini-3.7-flash", "gemini-3.8-flash"]; // update to verified-current model names
-let analysis: string | undefined;
+    let analysis: string | undefined;
 
-async function tryGeminiModel(modelName: string, prompt: string): Promise<string | undefined> {
-  try {
-    console.log(`Se încearcă modelul: ${modelName}...`);
-    const model = genAI.getGenerativeModel({ model: modelName });
-    const result = await model.generateContent(prompt);
-    if (result?.response) {
-      console.log(`Succes cu modelul: ${modelName}`);
-      return result.response.text();
+    // 1) Gemini, cu timeout
+    try {
+      console.log(`Se încearcă modelul: ${GEMINI_MODEL}...`);
+      const model = genAI.getGenerativeModel({ model: GEMINI_MODEL });
+      const result = await withTimeout(
+        model.generateContent(prompt),
+        GEMINI_TIMEOUT_MS,
+        GEMINI_MODEL
+      );
+      analysis = result.response.text() || undefined;
+      if (analysis) console.log(`Succes cu modelul: ${GEMINI_MODEL}`);
+    } catch (err: any) {
+      console.error(`Eroare detaliată pentru ${GEMINI_MODEL}:`, err?.message || err);
     }
-  } catch (err: any) {
-    console.error(`Eroare detaliată pentru ${modelName}:`, err?.message || err);
-  }
-  return undefined;
-}
 
-for (const modelName of modelsToTry) {
-  analysis = await tryGeminiModel(modelName, prompt);
-  if (analysis) break;
-}
-
-// Fallback final gratuit, dacă toate variantele Gemini au eșuat
-if (!analysis) {
-  try {
-    console.log("Toate modelele Gemini au eșuat, se încearcă Groq (GPT-OSS)...");
-    const groqResult = await groq.chat.completions.create({
-      model: "openai/gpt-oss-120b",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 2000,
-    });
-    analysis = groqResult.choices[0]?.message?.content ?? undefined;
-    if (analysis) {
-      console.log("Succes cu Groq (GPT-OSS).");
-    } else {
-      console.error("Groq a răspuns dar fără conținut:", JSON.stringify(groqResult));
+    // 2) Groq, doar dacă mai e timp în buget
+    const remaining = TOTAL_BUDGET_MS - (Date.now() - START);
+    if (!analysis && remaining > 5000) {
+      try {
+        console.log("Gemini a eșuat, se încearcă Groq...");
+        const groqResult = await withTimeout(
+          groq.chat.completions.create({
+            model: "openai/gpt-oss-120b",
+            messages: [{ role: "user", content: prompt }],
+            max_tokens: 1500,
+          }),
+          remaining,
+          "Groq"
+        );
+        analysis = groqResult.choices[0]?.message?.content ?? undefined;
+        if (analysis) {
+          console.log("Succes cu Groq.");
+        } else {
+          console.error("Groq a răspuns dar fără conținut.");
+        }
+      } catch (err: any) {
+        console.error("Eroare detaliată pentru Groq:", err?.message || err);
+      }
     }
-  } catch (err: any) {
-    console.error("Eroare detaliată pentru Groq:", err?.response?.data || err?.message || err);
-  }
-}
 
-let isFallback = false;
+    // 3) Fallback local
+    let isFallback = false;
+    if (!analysis) {
+      console.warn("Toți agenții AI au eșuat, se folosește descrierea fallback.");
+      analysis = getFallbackAnalysis(fullCharacter.name, fullCharacter.animeSlug);
+      isFallback = true;
+    }
 
-if (!analysis) {
-  console.warn("Toți agenții AI au eșuat, se folosește descrierea fallback.");
-  analysis = getFallbackAnalysis(fullCharacter.name, fullCharacter.animeSlug);
-  isFallback = true;
-}
-
-   if (!isFallback) {
-  await prisma.characterMatch.create({
-    data: {
-      sessionId,
-      characterId: fullCharacter.id,
-      characterName: fullCharacter.name,
-      similarity,
-      narrative: analysis,
-    },
-  });
-}
+    if (!isFallback) {
+      await prisma.characterMatch.create({
+        data: {
+          sessionId,
+          characterId: fullCharacter.id,
+          characterName: fullCharacter.name,
+          similarity,
+          narrative: analysis,
+        },
+      });
+    }
 
     return NextResponse.json({ analysis, isFallback });
   } catch (err) {
