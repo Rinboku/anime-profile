@@ -3,6 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import Groq from "groq-sdk";
 import { prisma } from "@/lib/prisma";
 import { VECTOR_KEY_ORDER } from "@/data/vectorKeyOrder";
+import { getFallbackAnalysis } from "@/data/fallbackDescriptions";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
@@ -179,21 +180,27 @@ if (!analysis) {
   }
 }
 
+let isFallback = false;
+
 if (!analysis) {
-  throw new Error("All AI agents are currently offline.");
+  console.warn("Toți agenții AI au eșuat, se folosește descrierea fallback.");
+  analysis = getFallbackAnalysis(fullCharacter.name, fullCharacter.animeSlug);
+  isFallback = true;
 }
 
-    await prisma.characterMatch.create({
-      data: {
-        sessionId,
-        characterId: fullCharacter.id,
-        characterName: fullCharacter.name,
-        similarity,
-        narrative: analysis,
-      },
-    });
+   if (!isFallback) {
+  await prisma.characterMatch.create({
+    data: {
+      sessionId,
+      characterId: fullCharacter.id,
+      characterName: fullCharacter.name,
+      similarity,
+      narrative: analysis,
+    },
+  });
+}
 
-    return NextResponse.json({ analysis });
+    return NextResponse.json({ analysis, isFallback });
   } catch (err) {
     console.error("[character-report]", err);
     return NextResponse.json({ error: "Eroare la generarea analizei." }, { status: 500 });
