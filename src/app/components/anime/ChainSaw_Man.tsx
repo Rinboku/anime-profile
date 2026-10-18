@@ -1394,7 +1394,7 @@ const currentArcPercent = answeredByArc[arcIdx];
   if (showArcTransition) {
   const nextArc = CATALOG[arcIdx + 1];
   return (
-    <ArcTransitionScreen
+       <ArcTransitionScreen arcs={CATALOG.map((arc, i) => ({ id: i, title: arc.title }))} completedCount={arcIdx + 1}
   completedArcTitle={currentArc.title}
   nextArcTitle={nextArc.title}
   percentRemaining={100 - globalPercent}
