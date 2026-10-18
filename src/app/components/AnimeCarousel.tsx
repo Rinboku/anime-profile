@@ -153,7 +153,7 @@ function ModalSplit({
   imageClass?: string;
 }) {
   return (
-    <div className="w-full h-full flex flex-col md:flex-row overflow-hidden">
+    <div className="w-full h-full flex flex-col md:flex-row overflow-y-auto md:overflow-hidden">
       {/* LEFT — imagine */}
       <div className="relative w-full md:w-1/2 h-36 sm:h-44 md:h-full shrink-0 overflow-hidden bg-[#0b1016]">
  
@@ -168,7 +168,7 @@ function ModalSplit({
       </div>
  
       {/* RIGHT — conținut */}
-      <div className="flex-1 min-h-0 overflow-y-auto">
+      <div className="flex-1 md:min-h-0 md:overflow-y-auto pb-24 md:pb-0">
         {children}
       </div>
     </div>
@@ -341,29 +341,29 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
  
       {/* ══════════════════════ MODAL ══════════════════════ */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-2 md:p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-0 md:p-4">
           <div className="absolute inset-0 bg-black/90 backdrop-blur-md" onClick={handleCloseModal} />
  
           <div
-  className={`relative w-full max-w-7xl h-[88dvh] rounded-2xl overflow-hidden ${t.bg} border ${isLight ? 'border-black/20' : 'border-white/10'}`}
+  className={`relative w-full max-w-7xl h-[100dvh] md:h-[88dvh] rounded-none md:rounded-2xl overflow-hidden ${t.bg} border ${isLight ? 'border-black/20' : 'border-white/10'}`}
   style={{ fontFamily: t.fontFamily }}
 >
  
             {/* Close */}
             <button onClick={handleCloseModal}
-              className={`absolute top-5 right-5 z-50 w-10 h-10 rounded-full flex items-center justify-center transition-colors border ${t.closeBtn}`}>
+              className={`absolute top-3 right-3 md:top-5 md:right-5 z-50 w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-colors border ${t.closeBtn}`}>
               ✕
             </button>
  
             {/* ── STEP 0: Informed Consent ── */}
             {quizStep === 0 && (
               <ModalSplit imageSrc={DEMO_IMAGES[0] ?? activeSlide.image} imageAlt={activeSlide.title} imageClass="object-contain object-center">
-                <div className="p-5 sm:p-8 md:p-12 flex flex-col justify-between h-full">
+                <div className="p-5 sm:p-8 md:p-12 flex flex-col justify-between min-h-full">
                   <div>
                     <span className={`font-bold uppercase tracking-widest text-[10px] ${t.subText}`}>Research Protocol</span>
-                    <h3 className={`font-serif text-3xl font-black mt-1 uppercase ${t.text}`}>Informed Consent</h3>
+                    <h3 className={`font-serif text-2xl md:text-3xl font-black mt-1 uppercase ${t.text}`}>Informed Consent</h3>
                     <div className={`w-12 h-1 mt-4 ${isLight ? 'bg-zinc-900' : 'bg-white/40'}`} />
-                    <div className={`space-y-4 font-serif text-lg mt-6 ${t.subText}`}>
+                    <div className={`space-y-4 font-serif text-base md:text-lg mt-6 ${t.subText}`}>
                       <p>This academic research aims to evaluate interaction and psychological impact among the digital culture enthusiast community. Your participation involves completing structured anonymous questionnaires.</p>
                       <p>All collected information is confidential, secure, and used strictly for scientific and statistical purposes. You may withdraw from the study at any time.</p>
                     </div>
@@ -382,13 +382,13 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
             {/* ── STEP 1: Immersion Intro ── */}
             {quizStep === 1 && (
               <ModalSplit imageSrc={DEMO_IMAGES[1] ?? activeSlide.image} imageAlt={activeSlide.title}>
-                <div className={`p-5 sm:p-8 md:p-12 flex flex-col justify-between h-full ${t.text}`}>
+                <div className={`p-5 sm:p-8 md:p-12 flex flex-col justify-between min-h-full ${t.text}`}>
                   <div>
                     <div className="text-center mb-10 mt-4">
                       <span className="font-bold uppercase tracking-[0.3em] text-[10px] opacity-60 block mb-2">Chapter 1</span>
                       <h3 className="font-serif text-xl md:text-3xl font-black uppercase tracking-wide md:tracking-widest">- RECKONING -</h3>
                     </div>
-                    <div className="space-y-6 max-w-xl mx-auto font-serif text-lg leading-relaxed text-center">
+                    <div className="space-y-6 max-w-xl mx-auto font-serif text-base md:text-lg leading-relaxed text-center">
                       <p className="font-medium opacity-90">Welcome to the psychological deep-dive of <strong>{activeSlide.title}</strong>. Before you proceed to the undergo your journey in order to know which character are, take a moment to sync with the weight of your experiences inside this specific narrative.</p>
                       <p className="italic opacity-80 pt-2">Every choice, bond, and existential question explored in this universe has shaped your journey.</p>
                     </div>
@@ -613,13 +613,13 @@ const ANIME_QUIZ_MAP: Record<string, React.ComponentType<{ onFinish: (sessionId:
             {/* ── STEP 6: Story Arc 2 Intro ── */}
             {quizStep === 6 && (
               <ModalSplit imageSrc={DEMO_IMAGES[6] ?? activeSlide.image} imageAlt={activeSlide.title}>
-                <div className={`p-5 sm:p-8 md:p-12 flex flex-col justify-between h-full ${t.text}`}>
+                <div className={`p-5 sm:p-8 md:p-12 flex flex-col justify-between min-h-full ${t.text}`}>
                   <div>
                     <div className="text-center mb-10 mt-4">
                       <span className="font-bold uppercase tracking-[0.3em] text-[10px] opacity-60 block mb-2">Story Begins!</span>
                       <h3 className="font-serif text-xl md:text-3xl font-black uppercase tracking-wide md:tracking-widest">- Hello Traveler! Welcome and hope at the end you will find you you are! -</h3>
                     </div>
-                    <div className="space-y-6 max-w-xl mx-auto font-serif text-lg leading-relaxed text-center">
+                    <div className="space-y-6 max-w-xl mx-auto font-serif text-base md:text-lg leading-relaxed text-center">
                       <p className="font-medium opacity-90">Congratulations for coming this far into the <strong>{activeSlide.title}</strong> universe. Now we need to know a little more about you.</p>
                       <p className="italic opacity-80 pt-2">Respond as you see fit, and remember — there are no wrong or right answers.</p>
                     </div>

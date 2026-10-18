@@ -138,7 +138,7 @@ export function CharacterMatchModal({
                   {result.character.name}
                 </h2>
                 <p className="mt-1 text-gray-500">
-                  {(result.similarity * 100).toFixed(1)}% similaritate
+                  {(result.similarity * 100).toFixed(1)}% Similarity!
                 </p>
               </div>
 
