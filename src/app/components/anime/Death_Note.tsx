@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { LikertScale } from "../LikertScale";
 import { Need_For_Cognition_18 } from "@/app/psychometrics";
+import { ArcTransitionScreen } from "../ArcTransitionScreen";
+import { ProgressCrystal } from "../ProgressCrystal";
+import { ArcSideTabs } from "../ArcSideTabs";
 
 
 interface QuizItem {
@@ -372,14 +375,15 @@ const L5_GAS: LikertConfig = {min:1, max:5, step:1, type:"buttons",values:[
 
 const CATALOG: Arc[] = [
   {
-    title: 'ARC 1 — Boredom',
+    title: 'ARC 1 — Akatsuki Rising',
     episodes: [
+      
        {
         title: 'Episode 1',
     
         subscales: [
           {
-            label: 'Rebirth',
+            label: 'The Return of the Hero',
             likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
             items: [
               { id: 'mach_1', text: 'It\'s not wise to tell your secrets.' },
@@ -391,18 +395,6 @@ const CATALOG: Arc[] = [
               { id: 'mach_7', text: 'There are things you should hide from other people to preserve your reputation.' },
               { id: 'mach_8', text: 'Make sure your plans benefit yourself, not others.' },
               { id: 'mach_9', text: 'Most people can be manipulated.' },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Episode 2',
-       
-        subscales: [
-          {
-            label: 'Confrontation',
-            likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
-            items: [
               { id: 'narc_1', text: 'I tend to want others to admire me.' },
               { id: 'narc_2', text: 'I tend to want others to pay attention to me.' },
               { id: 'narc_3', text: 'I tend to seek prestige or status.' },
@@ -412,17 +404,6 @@ const CATALOG: Arc[] = [
               { id: 'narc_7', text: 'I tend to think I am as special as I am important.' },
               { id: 'narc_8', text: 'I tend to think I deserve extra special treatment.' },
               { id: 'narc_9', text: 'I tend to think I am better than others.' },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Episode 3',
-        subscales: [
-          {
-            label: 'Dealings',
-            likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
-            items: [
               { id: 'psyc_1', text: 'I tend to be callous or insensitive.' },
               { id: 'psyc_2', text: 'I tend not to feel remorseful when I do something wrong.' },
               { id: 'psyc_3', text: 'I tend to be cynical.' },
@@ -432,18 +413,6 @@ const CATALOG: Arc[] = [
               { id: 'psyc_7', text: 'I tend to be unpredictable.' },
               { id: 'psyc_8', text: 'I tend to do dangerous things.' },
               { id: 'psyc_9', text: 'I tend to behave erratically.' },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Episode 4',
-    
-        subscales: [
-          {
-            label: 'Pursuit',
-            likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
-            items: [
               { id: 'sad_1', text: 'I have hurt people for my own enjoyment.' },
               { id: 'sad_2', text: 'I would enjoy hurting someone physically, sexually, or emotionally.' },
               { id: 'sad_3', text: 'I have fantasized about hurting people who have annoyed me.' },
@@ -453,16 +422,15 @@ const CATALOG: Arc[] = [
               { id: 'sad_7', text: 'People would enjoy hurting others if they tried it.' },
               { id: 'sad_8', text: 'Hurting people is exciting.' },
               { id: 'sad_9', text: 'I have humiliated others to keep them in line.' },
-              
             ],
           },
         ],
       },
       {
-        title: 'Episode 5',
+        title: 'Episode 2',
         subscales: [
           {
-            label: 'Tactics',
+            label: 'The Shadow of Itachi',
             likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
             items: [
               { id: 'ex1', text: 'Is outgoing, sociable.' },
@@ -473,49 +441,37 @@ const CATALOG: Arc[] = [
               { id: 'ex6', text: 'Is less active than other people.' },
               {id: "ag1", text: "Is compassionate has a soft heart." },
               {id: "ag2", text: "Is respectful, treats others with respect. "},
-              {id: "ag3", text: "Tends to find fault with others. " },
-              {id: "ag4", text: "Feels little sympathy for others. " },
+              {id: "ag3", text: "Tends to find fault with others." },
+              {id: "ag4", text: "Feels little sympathy for others." },
               {id: "ag5", text: "Starts quarrels with others." },
-              {id: "ag6", text: "Has a forgiving nature. " },
+              {id: "ag6", text: "Has a forgiving nature." },
+              {id: "co1", text: "Tends to be disorganized." },
+              {id: "co2", text: "Tends to be lazy."},
+              {id: "co3", text: "Is dependable, steady." },
+              {id: "co4", text: "Keeps things nest and tidy." },
+              {id: "co5", text: "Has difficulty getting started on tasks." },
+              {id: "co6", text: "Can be somewhat careless." },
+              {id: "ne1", text: "Is relaxed, handles stress well." },
+              {id: "ne2", text: "Stays optimistic after experiencing a setback."},
+              {id: "ne3", text: "Is moody, has up and down mood swings." },
+              {id: "ne4", text: "Worries a lot." },
+              {id: "ne5", text: "Feels secure, comfortable with self." },
+              {id: "ne6", text: "Is emotionally stable, not easily upset." },
+              {id: "om1", text: "Has few artistic interests." },
+              {id: "om2", text: "Is curious about many different things."},
+              {id: "om3", text: "Is inventive, finds clever ways to do things." },
+              {id: "om4", text: "Fascinated by art music or literature." },
+              {id: "om5", text: "Avoids intellectual, philosophical discussions." },
+              {id: "om6", text: "Has little creativity." }
             ],
           },
         ],
       },
       {
-        title:"Episode 6",
+        title:"Episode 3",
         subscales: [
           {
-            label:"Unraveling",
-            likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
-            items:[
-              {id: "co1", text: "Tends to be disorganized." },
-        {id: "co2", text: "Tends to be lazy."},
-        {id: "co3", text: "Is dependable, steady." },
-        {id: "co4", text: "Keeps things nest and tidy." },
-        {id: "co5", text: "Has difficulty getting started on tasks. " },
-        {id: "co6", text: "Can be somewhat careless." },
-        {id: "ne1", text: "Is relaxed, handles stress well." },
-        {id: "ne2", text: "Stays optimistic after experiencing a setback."},
-        {id: "ne3", text: "Is moody, has up and down mood swings. " },
-        {id: "ne4", text: "Worries a lot. " },
-        {id: "ne5", text: "Feels secure, comfortable with self. " },
-        {id: "ne6", text: "Is emotionally stable, not easily upset. " },
-        {id: "om1", text: "Has few artistic interests. " },
-        {id: "om2", text: "Is curious about many different things. "},
-        {id: "om3", text: "Is inventive, finds clever ways to do things. " },
-        {id: "om4", text: "Fascinated by art music or literature. " },
-        {id: "om5", text: "Avoids intellectual, philosophical discussions. " },
-        {id: "om6", text: "Has little creativity. " }
-
-            ]
-          }
-        ]
-      },
-      {
-        title:"Episode 7",
-        subscales: [
-          {
-            label:"Overcast",
+            label:"A Promise to Sakura",
             likert:{min:1, max:4, step: 1, type: "buttons", values:[{value: 1, label:"Agree Strongly"},{value:2, label:"Agree Some"}, {value:3, label:"Disagree Some"},{value:4, label:"Disagree Strongly"}]},
             items:[
               {id: "pre1", text: "I have a reserved and cautious attitude toward life. "},
@@ -539,10 +495,10 @@ const CATALOG: Arc[] = [
         ]
       },
       {
-        title:"Episode 8",
+        title:"Episode 4",
         subscales: [
           {
-            label:"Glare",
+            label:"The Snake's New Vessel",
             likert:{min:1, max:5, step: 1, type: "buttons", values:[{value:1, label:"Extremely uncharacteristic of me"},{value:2, label:"Somewhat uncharacteristic of me"},{value:3, label:"Uncertain"},{value:4, label:"Somehat characteristic of me"},{value:5, label:"Extremely characteristic of me"}]},
             items:[
               {id: "nfc1", text: "I would prefer complex to simple problems."},
@@ -565,18 +521,18 @@ const CATALOG: Arc[] = [
         {id: "nfc18", text: "I usually end up deliberating about issues even when don't affect me personally. "}
             ]
           }]
-      }       
-    ],        
+      }       // ← virgulă după ultimul episod
+    ],         // ← închide episodes[]
   },
   {
-    title:"Arc 2 - Confluence",
+    title:"Arc 2 - Pursuit of Sasuke",
      episodes: [
-  
+      
       {
-        title:"Episode 9",
+        title:"Episode 5",
         subscales: [
           {
-            label:"Encounter",
+            label:"The Curse of the Uchiha",
             likert:{min: 0, max: 100, step : 1, type:"slider",values: []},
             items:[
              {id: "mds1", text: "How much of your time spent daydreaming is occupied by vivid and counselor-like characters or elaborate fantasy worlds?"},
@@ -600,10 +556,10 @@ const CATALOG: Arc[] = [
         ]
       },
     {
-      title:"Episode 10",
+      title:"Episode 6",
       subscales:[
         {
-          label:"Doubt",
+          label:"Team Seven Reunited",
           likert:{min: 1, max: 5, step:1, type:"buttons",values:[{value:1, label:"Almost never"},{value:2, label:"Sometimes"},{value:3, label:"Regularly"},{value:4, label:"Often"},{value:5, label:"Almost always"}]},
           items:[
             {id: "sb1", text: "I feel that I am the one who is responsible for what has happened."},
@@ -630,9 +586,9 @@ const CATALOG: Arc[] = [
       ]
     },
     {
-      title:"Episode 11",
+      title:"Episode 7",
       subscales:[{
-        label:"Assault",
+        label:"The Battle in the Hideout",
         likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Neither agree nor disagree"},{value:4, label:"Agree"},{value:5, label:"Strongly agree"}]},
         items:[
       {id : "psya1", text: "I feel psychological pain."},
@@ -654,39 +610,39 @@ const CATALOG: Arc[] = [
       ]
     },
     {
-      title:"Episode 12",
+      title:"Episode 8",
       subscales:[{
-        label:"Love",
+        label:"Brothers Beneath the Moon",
         likert:{min:0, max:3, step:1, type:"buttons", values:[{value:0, label:"Din not apply to me at all"},{value:1, label:"Applied to me to some degree, or some of the time"},{value:2, label:"Applied to me to a considerable degree, or a good part of the time"},{value:3, label:"Applied to me very much, or most of the time"}]},
         items:[
           {id: "dep1", text: "I couldn`t seem to experience any positive feeling at all."},
-      {id: "dep2", text: "I found it difficult to work up the initiative to do things."},
-      {id: "dep3", text: "I felt that I had nothing to look forward to."},
-      {id: "dep4", text: "I felt down-hearted and blue."},
-      {id: "dep5", text: "I was unable to become enthusiastic about anything."},
-      {id: "dep6", text: "I felt I wasn`t worth much as a person."},
-      {id: "dep7", text: "I felt that life was meaningless."},
-      {id: "stre1", text: "I found it hard to wind down."},
-      {id: "stre2", text: "I tended to over-react to situations."},
-      {id: "stre3", text: "I felt that I was using a lot of nervous energy."},
-      {id: "stre4", text: "I found myself getting agitated."},
-      {id: "stre5", text: "I found it difficult to relax."},
-      {id: "stre6", text: "I was intolerant of anything that kept me from getting on with what I was doing."},
-      {id: "stre7", text: "I felt that I was rather touchy."},
-      {id: "anx1", text: "I was aware of dryness of my mouth."},
-        {id: "anx2", text: "I experienced breathing difficulty (e.g: excessively rapid breahting, breathelessness in the absence of physical exertion)."},
-        {id: "anx3", text: "I experienced trembling (e.g: in the hands)."},
-        {id: "anx4", text: "I was worried about situations in which I might panic and make a fool of myself."},
-        {id: "anx5", text: "I felt I was close to panic."},
-        {id: "anx6", text: "I was aware of the action of my heart in the absence of physical exertion (e.g: sense of heart rate increase, heart skipping a beat)."},
-        {id: "anx7", text: "I felt scared without any good reason."},
+          {id: "dep2", text: "I found it difficult to work up the initiative to do things."},
+          {id: "dep3", text: "I felt that I had nothing to look forward to."},
+          {id: "dep4", text: "I felt down-hearted and blue."},
+          {id: "dep5", text: "I was unable to become enthusiastic about anything."},
+          {id: "dep6", text: "I felt I wasn`t worth much as a person."},
+          {id: "dep7", text: "I felt that life was meaningless."},
+          {id: "stre1", text: "I found it hard to wind down."},
+          {id: "stre2", text: "I tended to over-react to situations."},
+          {id: "stre3", text: "I felt that I was using a lot of nervous energy."},
+          {id: "stre4", text: "I found myself getting agitated."},
+          {id: "stre5", text: "I found it difficult to relax."},
+          {id: "stre6", text: "I was intolerant of anything that kept me from getting on with what I was doing."},
+          {id: "stre7", text: "I felt that I was rather touchy."},
+          {id: "anx1", text: "I was aware of dryness of my mouth."},
+          {id: "anx2", text: "I experienced breathing difficulty (e.g: excessively rapid breahting, breathelessness in the absence of physical exertion)."},
+          {id: "anx3", text: "I experienced trembling (e.g: in the hands)."},
+          {id: "anx4", text: "I was worried about situations in which I might panic and make a fool of myself."},
+          {id: "anx5", text: "I felt I was close to panic."},
+          {id: "anx6", text: "I was aware of the action of my heart in the absence of physical exertion (e.g: sense of heart rate increase, heart skipping a beat)."},
+          {id: "anx7", text: "I felt scared without any good reason."},
         ]
       }]
     },
     {
-      title:"Episode 13",
+      title:"Episode 9",
       subscales:[{
-        label:"Confession",
+        label:"The Truth Behind the Mangekyō",
         items:[
         {id:"ins1", text:"Difficult falling asleep.", likert:{min:0, max:4, step:1,type:"buttons", values:[{value:0, label:"None"},{value:1, label:"Mild"},{value:2, label:"Moderate"},{value:3, label:"Severe"},{value:4, label:"Very severe"}]}
          
@@ -703,9 +659,9 @@ const CATALOG: Arc[] = [
       }]
     },
     {
-      title:"Episode 14",
+      title:"Episode 10",
       subscales:[{
-        label:"Friend",
+        label:"A Revenge Born From Pain",
         items:[
           {id:"rses1", text:"On the whole, I am satisfied with myself.",likert:{min:1, max:4, step:1, type:"buttons",values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Agree"},{value:4, label:"Strongly agree"}]}},
         {id:"rses2", text:"At the times I think I am no good at all.",likert:{min:1, max:4, step:1, type:"buttons",values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Agree"},{value:4, label:"Strongly agree"}]}},
@@ -727,9 +683,9 @@ const CATALOG: Arc[] = [
     },
 
   {
-    title:"Episode 15",
+    title:"Episode 11",
     subscales:[{
-      label:"Wager",
+      label:"The Six Paths of Pain",
       likert:{min:0, max:3, step:1, type:"buttons",values:[{value:0, label:"Strongly disagree"},{value:1, label:"Disagree"},{value:2, label:"Agree"},{value:3, label:"Strongly agree"}]},
       items:[
          {id: "anh1", text:"I would enjoy favorite pastimes."},
@@ -750,9 +706,9 @@ const CATALOG: Arc[] = [
     }]
   },
   {
-    title: "Episode 16",
+    title: "Episode 12",
     subscales:[{
-      label:"Decision",
+      label:"The Destruction of Konoha",
       likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Somewhat disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Somewhat agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]},
       items:[
         {id: "dis1", text: "I am stuck in a situation that I feel is irrelevant."},
@@ -783,9 +739,9 @@ const CATALOG: Arc[] = [
     }]
   },
   {
-    title:"Episode 17",
+    title:"Episode 13",
     subscales:[{
-      label:"Execution",
+      label:"The Sage Returns",
       likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Completely untrue"},{value:2, label:"Mostly untrue"},{value:3, label:"Somewhat true"},{value:4, label:"Mostly true"},{value:5, label:"Completely true"}]},
       items:[
         {id: "aut1", text: "I feel a sense of choice and freedom in the things I undertake."},
@@ -819,12 +775,12 @@ const CATALOG: Arc[] = [
     ]
   },
   {
-    title:"Arc 3 - Hard Run",
+    title:"Arc 3 - Pain of the Shinobi",
      episodes: [
       {
-        title:"Episode 18",
+        title:"Episode 14",
         subscales:[{
-          label:"Ally",
+          label:"Naruto's Final Lesson",
           items:[
            {id:"sali1", text: "You spend a lot of time thinking about social media or planning use of it.", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Very rarely"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
            {id:"tole1", text:"You feel an urge to use social media more and more.",likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Very rarely"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
@@ -858,9 +814,9 @@ const CATALOG: Arc[] = [
         ]
       },
       {
-        title:"Episode 19",
+        title:"Episode 15",
         subscales:[{
-          label:"Matsuda",
+          label:"The Battle of the Nine-Tails",
           items:[
             {id:"tiktok1", text:"During the last 12 months...I think about how I could reduce my work/study time to spend more time on TikTok.", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Very rarely"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
             {id:"tiktok2", text:"During the last 12 months...I have TikTok in my mind even when I am not using it.", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Very rarely"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
@@ -881,9 +837,9 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 20",
+        title:"Episode 16",
         subscales:[{
-          label:"Makeshift",
+          label:"A Village Reborn",
           likert:{min:0, max:6, step:1, type:"buttons", values:[{value:0, label:"Does not describe me at all"},{value:1, label:"1"},{value:2, label:"2"},{value:3, label:"Describe me somewhat"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"Describes me very well"}]},
           items:[
           {id:"radalcohol1", text:"Drinking is like a slippery slope, I end up drinking more than I wanted to."},
@@ -920,9 +876,9 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 21",
+        title:"Episode 17",
         subscales:[{
-          label:"Performance",
+          label:"The Hero of Konoha",
           items:[
             {id:"gas1", text:"Did you think about playing a game all day long?", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Never"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
         {id:"gas2", text:"Did you spend increasing amounts of time on games?", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Never"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
@@ -947,9 +903,9 @@ const CATALOG: Arc[] = [
       },
 
       {
-        title:"Episode 22",
+        title:"Episode 18",
         subscales:[{
-          label:"Guidance",
+          label:"The Allied Shinobi Forces",
           likert:{min:0, max:4, step:1, type:"buttons", values:[{value:0, label:"Never"},{value:1, label:"Rarely"},{value:2, label:"Sometimes"},{value:3, label:"Often"},{value:4, label:"Always"}]},
           items:[
             {id:"clc1", text:"How many times have you been watching anime series more than you would have?"},
@@ -979,12 +935,12 @@ const CATALOG: Arc[] = [
     ]
   },
   {
-   title:"Arc 4 - Love",
+   title:"Arc 4 - Fourth Great Ninja War",
      episodes: [
       {
-       title:"Episode 23",
+       title:"Episode 19",
        subscales:[{
-        label:"Frenzy",
+        label:"The Army of the Dead",
         likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Almost always false of me"},{value:2, label:"2"},{value:3, label:"More often false of me"},{value:4, label:"4"},{value:5, label:"More often true of me"},{value:6, label:"6"},{value:7, label:"Almost always true of me"}]},
         items:[
           {id: "fos1", text: "Although I feel badly at first when I mess up, over time I can give myself some slack."},
@@ -1009,9 +965,9 @@ const CATALOG: Arc[] = [
        }]
       },
       {
-        title:"Episode 24",
+        title:"Episode 20",
         subscales:[{
-          label:"Revival",
+          label:"The Masked Man",
           likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Almost never"},{value:2, label:"Occasionally"},{value:3, label:"About half of the time"},{value:4, label:"Fairly"},{value:5, label:"Almost always"}]},
           items:[
             {id: "sk1", text: "I'm kind to myself when I'm experiencing suffering."},
@@ -1044,9 +1000,9 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 25",
+        title:"Episode 21",
         subscales:[{
-          label:"Silence",
+          label:"The Nine-Tails' Choice",
           likert:{min:1, max:10, step:1, type:"slider",values:[{value:1, label:"Never"},{value:2, label:"2"},{value:3, label:"3"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"6"},{value:7, label:"7"},{value:8, label:"8"},{value:9, label:"9"},{value:10, label:"Always"}]},
           items:[
             {id:"tfc9", text:"When someone fails, I think they are stupid."},
@@ -1073,12 +1029,12 @@ const CATALOG: Arc[] = [
     ]
   },
   {
-   title:"Arc 5 - Kindred Spirits",
+   title:"Arc 5 - Sage of Six Paths",
      episodes: [
       {
-        title:"Episode 26",
+        title:"Episode 22",
         subscales:[{
-          label:"Renewal",
+          label:"The Brothers of the Battlefield",
           likert:{min:1, max:4, step:1, type:"buttons",values:[{value:1, label:"I haven`t been doing this at all"},{value:2, label:"I`ve been doing this a little bit"},{value:3,label:"I`ve been doing this a medium amount"},{value:4, label:"I`ve been doing this a lot"}]},
           items:[
             {id: "sd1", text: "I've been turning to work or other activities to take my mind off things. "},
@@ -1116,9 +1072,9 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 27",
+        title:"Episode 23",
         subscales:[{
-          label:"Abduction",
+          label:"The Fourth Hokage Returns",
           items:[
             {id:"sele1", text:"I open up for positive experiences.",likert:{min:1, max:7, step:1, type:"buttons",values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3,label:"Somewhat disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Somewhat agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]}},
             {id:"sele2", text:"I get to experience new things about myself.",likert:{min:1, max:7, step:1, type:"buttons",values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3,label:"Somewhat disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Somewhat agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]}},
@@ -1143,9 +1099,9 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 28",
+        title:"Episode 24",
         subscales:[{
-          label:"Impatience",
+          label:"The Ten-Tails Awakens",
           likert:{min:0, max:1, step:1, type:"buttons", values:[{value:0, label:"No"},{value:1, label:"Yes"}]},
           items:[
             { id: "bce1",  text: "Did you have at least one caregiver with whom you felt safe?" },
@@ -1172,9 +1128,9 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 29",
+        title:"Episode 25",
         subscales:[{
-          label:"Father",
+          label:"The Ancient Shinobi",
           likert:{min:0, max:4, step:1, type:"buttons",values:[{value:0, label:"Strongly disagree"},{value:1, label:"Disagree"},{value:2, label:"Neither agree nor disagree"},{value:3, label:"Agree"},{value:4, label:"Strongly agree"}]},
           items:[
             {id: "si1", text: "I stay at home most of the day."},
@@ -1206,9 +1162,9 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 30",
+        title:"Episode 26",
         subscales:[{
-          label:"Justice",
+          label:"The Will of Hagoromo",
           likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Moderately disagree"},{value:3, label:"Neither agree nor disagree"},{value:4, label:"Moderately agree"},{value:5, label:"Strongly agree"}]},
           items:[
             {id: "nb1", text: "If other people do not seem to accept me, I do not let it bother me. "},
@@ -1227,36 +1183,55 @@ const CATALOG: Arc[] = [
     ] 
   },
   {
-    title:"Arc 6 - Finis",
+    title:"Arc 6 -Final Valley",
     episodes:[
       
       {
-        title:"Episode 31",
+        title:"Episode 27",
         subscales:[{
-          label:"Madara, requiem for a dream",
+          label:"The Final Team Seven",
+          likert:{min:1, max:7,step:1,type:"slider",values:[{value:1, label:"Strongly disagree"},{value:2, label:"2"},{value:3, label:"3"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"6"},{value:7, label:"Strongly agree"}]},
           items:[
-            {id: 'crt_1', text: 'A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost? _____ cents',type:"text"},
-            {id: 'crt_2', text: 'If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets? _____ minutes', type:"text"},
-            {id: 'crt_3', text: 'In a lake, there is a patch of lily pads. Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half of the lake? _____ days', type:"text"},
-            {id: 'bnt_1', text: 'Out of 1,000 people in a small town, 500 are members of a choir. Out of these 500 members, 100 are men. Out of the 500 inhabitants that are not in the choir, 300 are men. What is the probability that a randomly drawn man is a member of the choir? Please indicate the probability in percent. _____ %', type:"text"},
-            {id: 'bnt_2', text: 'Imagine we are throwing a five-sided die 50 times. On average, out of these 50 throws, how many times would this five-sided die show an odd number (1, 3 or 5)? _____ out of 50 throws',type:"text"},
-            {id: 'bnt_3', text: 'In a forest, 20% of mushrooms are red, 50% are brown, and 30% are white. A red mushroom is poisonous with a probability of 20%. A mushroom that is not red is poisonous with a probability of 5%. What is the probability that a poisonous mushroom in the forest is red? _____ %', type:"text"},
-            {id: 'crt2_1', text: "If you're running a race and you pass the person in second place, what place are you in?", type:"text" },
-            {id: 'crt2_2', text: 'A farmer had 15 sheep and all but 8 died. How many are left?', type:"text"},
-            {id: 'crt2_3', text: "Emily's father has three daughters. The first two are named April and May. What is the third daughter's name?", type:"text"},
-            {id: 'crt2_4', text: "How many cubic feet of dirt are there in a hole that is 3' deep x 3' wide x 3' long?",type:"text"}
+            {id: 'self_construal_1', text: "I enjoy being unique and different from others in many respects."},
+            {id: 'self_construal_2', text: "I can talk openly with a person who I meet for the first time, even when this person is much older than I am."},
+            {id: 'self_construal_3', text: "Even when I strongly disagree with group members, I avoid an argument."},
+            {id: 'self_construal_4', text: "I have respect for the authority figures with whom I interact."},
+            {id: 'self_construal_5', text: "I do my own thing, regardless of what others think."},
+            {id: 'self_construal_6', text: "I respect people who are modest about themselves."},
+            {id: 'self_construal_7', text: "I feel it is important for me to act as an independent person." },
+            {id: 'self_construal_8', text: "I will sacrifice my self interest for the benefit of the group I am in."},
+            {id: 'self_construal_9', text: "I`d rather say NO directly, than risk being misunderstood."},
+            {id: 'self_construal_10', text: "Having a lively imagination is important to me."},
+            {id: "self_construal_11", text: "I should take into consideration my parents&#39; advice when making education/career plans."},
+            {id: "self_construal_12", text: "I feel my fate is intertwined with the fate of those around me."},
+            {id: "self_construal_13", text: "I prefer to be direct and forthright when dealing with people I&#39;ve just met."},
+            {id: "self_construal_14", text: "I feel good when I cooperate with others."},
+            {id: "self_construal_15", text: "I am comfortable with being singled out for praise or rewards."},
+            {id: "self_construal_16", text: "If my brother or sister fails, I feel responsible."},
+            {id: "self_construal_17", text: "I often have the feeling that my relationships with others are more important than my own accomplishments."},
+            {id: "self_construal_18", text: "Speaking up during a class (or a meeting) is not a problem for me."},
+            {id: "self_construal_19", text: "I would offer my seat in a bus to my professor (or my boss)."},
+            {id: "self_construal_20", text: "I act the same way no matter who I am with."},
+            {id: "self_construal_21", text: "My happiness depends on the happiness of those around me."},
+            {id: "self_construal_22", text: "I value being in good health above everything."},
+            {id: "self_construal_23", text: "I will stay in a group if they need me, even when I am not happy with the group."},
+            {id: "self_construal_24", text: "I try to do what is best for me, regardless of how that might affect others."},
+            {id: "self_construal_25", text: "Being able to take care of myself is a primary concern for me."},
+            {id: "self_construal_26", text: "It is important to me to respect decisions made by the group."},
+            {id: "self_construal_27", text: "My personal identity, independent of others, is very important to me."},
+            {id: "self_construal_28", text: "It is important for me to maintain harmony within my group."},
+            {id: "self_construal_29", text: "I act the same way at home that I do at school (or work)."},
+            {id: "self_construal_30", text: "I usually go along with what others want to do, even when I would rather do something different."},
+
+
           ]
         }]
-      }
-    ]
-  },
-  {
-    title:"Epilogue 32-33",
-     episodes: [
+      },
+  
       {
-        title:"Episode 33",
+        title:"Episode 28",
         subscales:[{
-          label:"Selection",
+          label:"Naruto and Sasuke",
           likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Slightly disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Slightly agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]},
           items:[
             {id:"aswe1", text:"I am often impatient to find our how an anime story ends."},
@@ -1273,11 +1248,12 @@ const CATALOG: Arc[] = [
             {id:"aswe12", text:"When I watch an anime series, I often feel that my body is in the room, but my mind is inside the world created by the anime story."}
           ]
         }]
-      },
+      }
+      ,
       {
-        title:"Episode 33",
+        title:"Episode 29",
         subscales:[{
-          label:"New World",
+          label:"The Shinobi Who Changed the World",
           likert:{min:1, max:6, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Slightly disagree"},{value:4, label:"Slightly agree"},{value:5, label:"Agree"},{value:6, label:"Strongly agree"}]},
           items:[
             {id:"nise1", text:"Thinking about anime story and characters help me know who I am as a person."},
@@ -1304,8 +1280,11 @@ const CATALOG: Arc[] = [
           ]
         }]
       }
+    
     ]
-  }];
+  }
+
+];
   
 
      interface DemographicPayload {
@@ -1337,237 +1316,267 @@ const CATALOG: Arc[] = [
   demographics?:DemographicPayload
 }
  
-export default function DeathNoteQuiz({ onFinish, onBack, demographics }: DeathNoteQuizProps) {
+const TOTAL_ITEMS = CATALOG.reduce(
+  (sum, arc) => sum + arc.episodes.reduce(
+    (s, ep) => s + (ep.subscales?.reduce((ss, sub) => ss + sub.items.length, 0) ?? 0), 0
+  ), 0
+);
+
+const ARC_ITEM_COUNTS = CATALOG.map(arc =>
+  arc.episodes.reduce(
+    (s, ep) => s + (ep.subscales?.reduce((ss, sub) => ss + sub.items.length, 0) ?? 0), 0
+  )
+);
+
+export default function NarutoQuiz({ onFinish, onBack, demographics }: DeathNoteQuizProps) {
   const [arcIdx,  setArcIdx]  = useState(0);
-    const [epIdx,   setEpIdx]   = useState(0);
-    const [subIdx,  setSubIdx]  = useState(0);
-  
-    // ── MODIFICAT: acceptă și string, pentru itemii de tip "text" ──────────
-    const [responses, setResponses] = useState<Record<string, number | string>>({});
-  
-    const [sessionId, setSessionId] = useState<string | null>(null);
-  
-    useEffect(() => {
-      let cancelled = false;
-  
-      startSession(ANIME_SLUG, demographics).then((data) => {
-        if (!cancelled) {
-          setSessionId(data.sessionId);
-        }
-      });
-  
-      return () => {
-        cancelled = true;
-      };
-    }, []);
-  
-    const t = THEME;
-    const currentArc = CATALOG[arcIdx];
-    const currentEp  = currentArc?.episodes[epIdx];
-    const hasSubscales = (currentEp?.subscales?.length ?? 0) > 0;
-    const currentSub   = hasSubscales ? currentEp.subscales[subIdx] : null;
-    const episodeImage = getEpisodeImage(currentEp?.title ?? '');
-  
-    if (!currentArc || !currentEp) {
-      return (
-        <div className={`w-full h-full flex flex-col items-center justify-center text-center p-8 ${t.bg}`}>
-          <p className={`text-2xl font-bold mb-6 ${t.text}`}>All sections complete!</p>
-          <button onClick={() => onFinish(sessionId!)} className={`px-8 py-3.5 font-bold uppercase tracking-widest text-[10px] rounded-md border ${t.btnOutline}`}>
-            See Results
-          </button>
-        </div>
-      );
-    }
-  
-    // ── MODIFICAT: folosește chei compuse (episode.title + item.id), ca să
-    // nu se mai suprascrie răspunsurile la id-uri duplicate între instrumente
-    // diferite. Trimite spre API tot itemId-ul original, neschimbat. ────────
-    const handleNext = async () => {
-      if (hasSubscales && currentSub && sessionId) {
-        const payload = currentSub.items
-          .map((item) => {
-            const raw = responses[getResponseKey(currentEp.title, item.id)];
-            const isText = typeof raw === "string";
-            return {
-              itemId: item.id,
-              episodeTitle: currentEp.title,
-              value: isText ? undefined : (raw as number | undefined),
-              textValue: isText ? (raw as string) : undefined,
-            };
-          })
-          .filter((r) => r.value !== undefined || r.textValue !== undefined);
-  
-        if (payload.length > 0) {
-          await fetch("/api/responses", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ sessionId, responses: payload }),
-          });
-        }
+  const [epIdx,   setEpIdx]   = useState(0);
+  const [subIdx,  setSubIdx]  = useState(0);
+  const [showArcTransition, setShowArcTransition] = useState(false);
+
+
+  // ── MODIFICAT: acceptă și string, pentru itemii de tip "text" ──────────
+  const [responses, setResponses] = useState<Record<string, number | string>>({});
+
+  const [sessionId, setSessionId] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    startSession(ANIME_SLUG, demographics).then((data) => {
+      if (!cancelled) {
+        setSessionId(data.sessionId);
       }
-      if (hasSubscales && subIdx < currentEp.subscales.length - 1) {
-        setSubIdx(p => p + 1);
-      } else if (epIdx < currentArc.episodes.length - 1) {
-        setEpIdx(p => p + 1); setSubIdx(0);
-      } else if (arcIdx < CATALOG.length - 1) {
-        setArcIdx(p => p + 1); setEpIdx(0); setSubIdx(0);
-      } else {
-        if (sessionId) {
-          await finishSession(sessionId);
-        }
-        onFinish(sessionId!);
-      }
+    });
+
+    return () => {
+      cancelled = true;
     };
-  
-    const isLastPage =
-      arcIdx === CATALOG.length - 1 &&
-      epIdx  === currentArc.episodes.length - 1 &&
-      (!hasSubscales || subIdx === currentEp.subscales.length - 1);
-  
-    // ── INTRO PAGE (episod fara subscale) ────────────────────────────────
-     if (!hasSubscales) {
-      return (
-        <div
-          className={`w-full h-full flex flex-col md:flex-row overflow-hidden ${t.bg}`}
-          style={{ fontFamily: t.fontFamily }}
-        >
-          <div className="relative w-full md:w-2/5 h-48 md:h-full flex items-end justify-center overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0B1218]/60 z-10 hidden md:block" />
-            <div className="relative w-full h-[95%] max-w-sm">
-              <Image
-                src={episodeImage}
-                alt={currentEp.title}
-                fill
-                className="object-contain object-bottom"
-                priority
-              />
-            </div>
-          </div>
-  
-          <div className="flex-1 flex flex-col items-center justify-center p-10 text-center">
-            <span className={`font-bold uppercase tracking-[0.3em] text-[10px] opacity-50 block mb-3 ${t.labelColor}`}>
-              {currentArc.title}
-            </span>
-            <div className="w-16 h-0.5 mb-6" style={{ backgroundColor: t.accentColor }} />
-            <h1 className={`text-3xl md:text-4xl font-black uppercase mb-6 ${t.text}`}>
-              {currentEp.title}
-            </h1>
-            <p className={`max-w-md text-base leading-relaxed font-serif italic mb-2 ${t.subText}`}>
-              This section covers the <strong>{currentArc.title}</strong> instruments.
-            </p>
-            <p className={`text-sm opacity-50 mb-10 ${t.subText}`}>
-              Answer each item honestly — there are no right or wrong answers.
-            </p>
-            <div className="flex gap-4">
-              <button onClick={onBack}
-                className={`px-8 py-3 font-bold uppercase tracking-widest text-[11px] border-2 rounded-lg transition-all ${t.btnOutline}`}>
-                Back
-              </button>
-              <button onClick={handleNext}
-                className={`px-10 py-3.5 font-bold uppercase tracking-widest text-[11px] rounded-lg shadow-xl transition-all transform hover:-translate-y-0.5 ${t.btnPrimary}`}>
-                Begin Arc →
-              </button>
-            </div>
-          </div>
-        </div>
-      );
+  }, []);
+
+  const t = THEME;
+  const currentArc = CATALOG[arcIdx];
+  const currentEp  = currentArc?.episodes[epIdx];
+  const totalAnswered = Object.keys(responses).length;
+  const globalPercent = (totalAnswered / TOTAL_ITEMS) * 100;
+  const ARC_ITEM_COUNTS = CATALOG.map(arc =>
+  arc.episodes.reduce(
+    (s, ep) => s + (ep.subscales?.reduce((ss, sub) => ss + sub.items.length, 0) ?? 0), 0
+  )
+);
+  const hasSubscales = (currentEp?.subscales?.length ?? 0) > 0;
+  const currentSub   = hasSubscales ? currentEp.subscales[subIdx] : null;
+  const episodeImage = getEpisodeImage(currentEp?.title ?? '');
+  const answeredByArc = CATALOG.map((arc, i) => {
+  if (i > arcIdx) return 0;
+  if (i < arcIdx) return 100;
+  // arc curent: calculează procentul real din itemii răspunși în acest arc
+  const arcAnswered = Object.keys(responses).filter(key =>
+    arc.episodes.some(ep => key.startsWith(ep.title))
+  ).length;
+  return Math.min(100, (arcAnswered / ARC_ITEM_COUNTS[i]) * 100);
+});
+
+const arcTabs = CATALOG.map((arc, i) => ({
+  title: arc.title.replace(/^Arc \d+\s*-\s*/i, "").replace(/^ARC \d+\s*—\s*/i, ""),
+  percent: answeredByArc[i],
+  isCurrent: i === arcIdx,
+}));
+
+const currentArcPercent = answeredByArc[arcIdx];
+
+
+  if (showArcTransition) {
+  const nextArc = CATALOG[arcIdx + 1];
+  return (
+    <ArcTransitionScreen
+  completedArcTitle={currentArc.title}
+  nextArcTitle={nextArc.title}
+  percentRemaining={100 - globalPercent}
+  globalPercent={globalPercent} // Adaugă această linie
+  accentColor={t.accentColor}
+  onContinue={() => {
+    setArcIdx(p => p + 1);
+    setEpIdx(0);
+    setSubIdx(0);
+    setShowArcTransition(false);
+  }}
+/>
+  );
+}
+
+  if (!currentArc || !currentEp) {
+    return (
+      <div className={`w-full h-full flex flex-col items-center justify-center text-center p-8 ${t.bg}`}>
+        <p className={`text-2xl font-bold mb-6 ${t.text}`}>All sections complete!</p>
+        <button onClick={() => onFinish(sessionId!)} className={`px-8 py-3.5 font-bold uppercase tracking-widest text-[10px] rounded-md border ${t.btnOutline}`}>
+          See Results
+        </button>
+      </div>
+    );
+  }
+
+  // ── MODIFICAT: folosește chei compuse (episode.title + item.id), ca să
+  // nu se mai suprascrie răspunsurile la id-uri duplicate între instrumente
+  // diferite. Trimite spre API tot itemId-ul original, neschimbat. ────────
+  const handleNext = async () => {
+    if (hasSubscales && currentSub && sessionId) {
+      const payload = currentSub.items
+        .map((item) => {
+          const raw = responses[getResponseKey(currentEp.title, item.id)];
+          const isText = typeof raw === "string";
+          return {
+            itemId: item.id,
+            episodeTitle: currentEp.title,
+            value: isText ? undefined : (raw as number | undefined),
+            textValue: isText ? (raw as string) : undefined,
+          };
+        })
+        .filter((r) => r.value !== undefined || r.textValue !== undefined);
+
+      if (payload.length > 0) {
+        await fetch("/api/responses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ sessionId, responses: payload }),
+        });
+      }
     }
-  
-    // ── ITEMS PAGE ────────────────────────────────────────────────────────
-    if (hasSubscales && currentSub) {
-      // ── MODIFICAT: chei compuse peste tot ──────────────────────────────
-      const allAnswered = currentSub.items.every(
-        (item) => responses[getResponseKey(currentEp.title, item.id)] !== undefined
-      );
-  
-      const answeredCount = currentSub.items.filter(
-        (item) => responses[getResponseKey(currentEp.title, item.id)] !== undefined
-      ).length;
-  
-      const progress = (answeredCount / currentSub.items.length) * 100;
-  
-          return (
-        <div
-          className={`w-full h-full flex md:flex-row overflow-hidden ${t.bg}`}
-          style={{ fontFamily: t.fontFamily }}
-        >
-          <div className="relative hidden md:block md:w-1/2 overflow-hidden">
+    
+    if (hasSubscales && subIdx < currentEp.subscales.length - 1) {
+      setSubIdx(p => p + 1);
+    } else if (epIdx < currentArc.episodes.length - 1) {
+      setEpIdx(p => p + 1); setSubIdx(0);
+    } else if (arcIdx < CATALOG.length - 1) {
+      setShowArcTransition(true);
+    } else {
+      if (sessionId) {
+        await finishSession(sessionId);
+      }
+      onFinish(sessionId!);
+    }
+  };
+
+  const isLastPage =
+    arcIdx === CATALOG.length - 1 &&
+    epIdx  === currentArc.episodes.length - 1 &&
+    (!hasSubscales || subIdx === currentEp.subscales.length - 1);
+
+
+
+  // ── INTRO PAGE (episod fara subscale) ────────────────────────────────
+   if (!hasSubscales) {
+    return (
+      <div
+        className={`relative w-full h-full flex flex-col md:flex-row overflow-hidden ${t.bg}`}
+        style={{ fontFamily: t.fontFamily }}
+      >
+        <ArcSideTabs tabs={arcTabs} accentColor={t.accentColor} />
+
+        <div className="relative w-full md:w-2/5 h-48 md:h-full flex items-end justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0B1218]/60 z-10 hidden md:block" />
+          <div className="relative w-full h-[95%] max-w-sm">
             <Image
               src={episodeImage}
               alt={currentEp.title}
               fill
-              className="object-contain object-bottom p-6"
+              className="object-contain object-bottom"
               priority
             />
           </div>
-  
-          <div className="flex-1 flex flex-col overflow-hidden">
-  
-            <div className={`shrink-0 px-6 pt-4 pb-3 border-b ${t.headerBorder}`}>
-              <div className="flex items-center gap-4">
-                <div className="flex-1 min-w-0">
-                  <span className={`text-[10px] font-bold uppercase tracking-widest opacity-40 block ${t.labelColor}`}>
-                    {currentArc.title}
-                  </span>
-                  <h2 className={`text-sm font-black uppercase truncate ${t.text}`}>
-                    {currentSub.label}
-                  </h2>
-                </div>
-                <span className={`text-xs font-bold shrink-0 ${t.subText}`}>
-                  {answeredCount}/{currentSub.items.length}
-                </span>
-              </div>
-  
-              <div className="mt-3 h-1 rounded-full overflow-hidden bg-white/10">
-                <div
-                  className="h-full rounded-full transition-all duration-300"
-                  style={{ width: `${progress}%`, backgroundColor: t.accentColor }}
-                />
-              </div>
+        </div>
+
+        <div className="flex-1 flex flex-col items-center justify-center p-10 text-center">
+          <span className={`font-bold uppercase tracking-[0.3em] text-[10px] opacity-50 block mb-3 ${t.labelColor}`}>
+            {currentArc.title}
+          </span>
+          <div className="w-16 h-0.5 mb-6" style={{ backgroundColor: t.accentColor }} />
+          <h1 className={`text-3xl md:text-4xl font-black uppercase mb-6 ${t.text}`}>
+            {currentEp.title}
+          </h1>
+          <p className={`max-w-md text-base leading-relaxed font-serif italic mb-2 ${t.subText}`}>
+            This section covers the <strong>{currentArc.title}</strong> instruments.
+          </p>
+          <p className={`text-sm opacity-50 mb-10 ${t.subText}`}>
+            Answer each item honestly — there are no right or wrong answers.
+          </p>
+          <div className="flex gap-4">
+            <button onClick={onBack}
+              className={`px-8 py-3 font-bold uppercase tracking-widest text-[11px] border-2 rounded-lg transition-all ${t.btnOutline}`}>
+              Back
+            </button>
+            <button onClick={handleNext}
+              className={`px-10 py-3.5 font-bold uppercase tracking-widest text-[11px] rounded-lg shadow-xl transition-all transform hover:-translate-y-0.5 ${t.btnPrimary}`}>
+              Begin Arc →
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── ITEMS PAGE ────────────────────────────────────────────────────────
+  if (hasSubscales && currentSub) {
+    // ── MODIFICAT: chei compuse peste tot ──────────────────────────────
+    const allAnswered = currentSub.items.every(
+      (item) => responses[getResponseKey(currentEp.title, item.id)] !== undefined
+    );
+
+    const answeredCount = currentSub.items.filter(
+      (item) => responses[getResponseKey(currentEp.title, item.id)] !== undefined
+    ).length;
+
+    const progress = (answeredCount / currentSub.items.length) * 100;
+
+        return (
+      <div
+        className={`w-full h-full flex md:flex-row overflow-hidden ${t.bg}`}
+        style={{ fontFamily: t.fontFamily }}
+      >
+        <div className="relative hidden md:block md:w-2/5 overflow-hidden">
+          <Image
+            src={episodeImage}
+            alt={currentEp.title}
+            fill
+            className="object-contain object-bottom p-6"
+            priority
+          />
+        </div>
+
+        <div className="flex-1 flex flex-col overflow-hidden">
+
+          <div className={`shrink-0 px-6 pt-4 pb-3 border-b ${t.headerBorder}`}>
+       <div className="flex items-center gap-4">
+  <ProgressCrystal percent={currentArcPercent} accentColor={t.accentColor} />
+  <div className="flex-1 min-w-0">
+    <span className={`text-[10px] font-bold uppercase tracking-widest opacity-40 block ${t.labelColor}`}>
+      {currentArc.title}
+    </span>
+    <h2 className={`text-sm font-black uppercase truncate ${t.text}`}>
+      {currentSub.label}
+    </h2>
+  </div>
+  <span className={`text-xs font-bold shrink-0 ${t.subText}`}>
+    {answeredCount}/{currentSub.items.length}
+  </span>
+</div>
+
+            <div className="mt-3 h-1 rounded-full overflow-hidden bg-white/10">
+              <div
+                className="h-full rounded-full transition-all duration-300"
+                style={{ width: `${progress}%`, backgroundColor: t.accentColor }}
+              />
             </div>
-  
-            {/* ITEMS */}
-            <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4 space-y-3">
-              {currentSub.items.map((item, idx) => {
-                const responseKey = getResponseKey(currentEp.title, item.id);
-                const currentValue = responses[responseKey];
-  
-                // ── NOU: itemi de tip "text" (ex: Chapter 31 — CRT/BNT) ──
-                if (item.type === "text") {
-                  return (
-                    <div
-                      key={item.id}
-                      className={`rounded-xl p-4 border transition-all duration-200 ${
-                        currentValue !== undefined ? t.itemBgAnswered : t.itemBg
-                      }`}
-                    >
-                      <p className={`text-[12px] font-medium mb-3 leading-snug ${t.text}`}>
-                        <span className="opacity-30 mr-2 font-black text-xs">{idx + 1}.</span>
-                        {item.text}
-                      </p>
-                      <input
-                        type="text"
-                        inputMode="numeric"
-                        value={(currentValue as string) ?? ""}
-                        onChange={(e) =>
-                          setResponses((prev) => ({
-                            ...prev,
-                            [responseKey]: e.target.value,
-                          }))
-                        }
-                        placeholder="Răspunsul tău..."
-                        className="w-full rounded-lg bg-white/10 border border-white/20 px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none"
-                        style={{ borderColor: currentValue !== undefined ? t.accentColor : undefined }}
-                      />
-                    </div>
-                  );
-                }
-  
-                // ── itemi likert (buttons/slider) — cod original, doar cu
-                // referințele la id înlocuite cu responseKey ──────────────
-                const likert = item.likert ?? currentSub.likert;
-                if (!likert) return null;
-  
+          </div>
+
+          {/* ITEMS */}
+          <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4 space-y-3">
+            {currentSub.items.map((item, idx) => {
+              const responseKey = getResponseKey(currentEp.title, item.id);
+              const currentValue = responses[responseKey];
+
+              // ── NOU: itemi de tip "text" (ex: Chapter 31 — CRT/BNT) ──
+              if (item.type === "text") {
                 return (
                   <div
                     key={item.id}
@@ -1575,117 +1584,151 @@ export default function DeathNoteQuiz({ onFinish, onBack, demographics }: DeathN
                       currentValue !== undefined ? t.itemBgAnswered : t.itemBg
                     }`}
                   >
-                    <p className={`text-[11px] md:text-xs font-medium mb-3 leading-tight ${t.text}`}>
+                    <p className={`text-[12px] font-medium mb-3 leading-snug ${t.text}`}>
                       <span className="opacity-30 mr-2 font-black text-xs">{idx + 1}.</span>
                       {item.text}
                     </p>
-  
-                    {likert.type === "slider" ? (() => {
-                      const sliderValue = (currentValue as number) ?? likert.min;
-                      const pct =
-                        ((sliderValue - likert.min) / (likert.max - likert.min)) * 100;
-  
-                      return (
-                        <div className="px-1 pt-6">
-                          <div className="relative h-6">
-                            <span
-                              className="absolute -translate-x-1/2 text-xs font-black px-3 py-1 rounded-full whitespace-nowrap"
-                              style={{
-                                left: `${pct}%`,
-                                backgroundColor: t.accentColor,
-                                color: "#fff",
-                              }}
-                            >
-                              {sliderValue}
-                            </span>
-                          </div>
-  
-                          <div className="relative flex items-center h-6">
-                            <div className="absolute left-0 right-0 h-2 rounded-full bg-white/15" />
-                            <div
-                              className="absolute left-0 h-2 rounded-full"
-                              style={{ width: `${pct}%`, backgroundColor: t.accentColor }}
-                            />
-                            <input
-                              type="range"
-                              min={likert.min}
-                              max={likert.max}
-                              step={likert.step}
-                              value={sliderValue}
-                              onChange={(e) =>
-                                setResponses((prev) => ({
-                                  ...prev,
-                                  [responseKey]: Number(e.target.value),
-                                }))
-                              }
-                              className="relative w-full h-2 appearance-none bg-transparent cursor-pointer"
-                              style={{ accentColor: t.accentColor }}
-                            />
-                          </div>
-  
-                          <div className="flex justify-between items-center mt-1">
-                            <span className={`text-[10px] font-semibold opacity-60 ${t.subText}`}>
-                              {likert.min}
-                            </span>
-                            <span className={`text-[10px] font-semibold opacity-60 ${t.subText}`}>
-                              {likert.max}
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })() : (
-                      <div className="flex flex-wrap gap-2">
-                        {likert.values.map((option) => (
-                          <button
-                            key={option.value}
-                            type="button"
-                            onClick={() =>
-                              setResponses((prev) => ({
-                                ...prev,
-                                [responseKey]: option.value,
-                              }))
-                            }
-                            className={`flex-1 min-w-[80px] py-2 rounded-lg transition-all duration-150 ${
-                              currentValue === option.value ? t.ratingSelected : t.ratingDefault
-                            }`}
-                          >
-                            <span className="text-[12px] font-semibold leading-tight">
-                              {option.label}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={(currentValue as string) ?? ""}
+                      onChange={(e) =>
+                        setResponses((prev) => ({
+                          ...prev,
+                          [responseKey]: e.target.value,
+                        }))
+                      }
+                      placeholder="Răspunsul tău..."
+                      className="w-full rounded-lg bg-white/10 border border-white/20 px-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none"
+                      style={{ borderColor: currentValue !== undefined ? t.accentColor : undefined }}
+                    />
                   </div>
                 );
-              })}
-            </div>
-  
-            {/* FOOTER */}
-            <div className={`shrink-0 px-6 py-4 border-t ${t.footerBorder}`}>
-              <button
-                type="button"
-                onClick={handleNext}
-                disabled={!allAnswered}
-                className={`w-full py-3.5 font-black uppercase tracking-widest text-[11px] rounded-xl transition-all ${
-                  allAnswered ? `${t.btnPrimary} shadow-lg` : "opacity-25 cursor-not-allowed bg-white/10 text-white"
-                }`}
-              >
-                {isLastPage ? "Finish & See Results ✓" : "Next →"}
-              </button>
-  
-              {!allAnswered && (
-                <p className={`text-center text-[10px] mt-2 opacity-30 ${t.labelColor}`}>
-                  {currentSub.items.length - answeredCount} item
-                  {currentSub.items.length - answeredCount !== 1 ? "s" : ""} remaining
-                </p>
-              )}
-            </div>
-  
+              }
+
+              // ── itemi likert (buttons/slider) — cod original, doar cu
+              // referințele la id înlocuite cu responseKey ──────────────
+              const likert = item.likert ?? currentSub.likert;
+              if (!likert) return null;
+
+              return (
+                <div
+                  key={item.id}
+                  className={`rounded-xl p-4 border transition-all duration-200 ${
+                    currentValue !== undefined ? t.itemBgAnswered : t.itemBg
+                  }`}
+                >
+                  <p className={`text-[11px] md:text-xs font-medium mb-3 leading-tight ${t.text}`}>
+                    <span className="opacity-30 mr-2 font-black text-xs">{idx + 1}.</span>
+                    {item.text}
+                  </p>
+
+                  {likert.type === "slider" ? (() => {
+                    const sliderValue = (currentValue as number) ?? likert.min;
+                    const pct =
+                      ((sliderValue - likert.min) / (likert.max - likert.min)) * 100;
+
+                    return (
+                      <div className="px-1 pt-6">
+                        <div className="relative h-6">
+                          <span
+                            className="absolute -translate-x-1/2 text-xs font-black px-3 py-1 rounded-full whitespace-nowrap"
+                            style={{
+                              left: `${pct}%`,
+                              backgroundColor: t.accentColor,
+                              color: "#fff",
+                            }}
+                          >
+                            {sliderValue}
+                          </span>
+                        </div>
+
+                        <div className="relative flex items-center h-6">
+                          <div className="absolute left-0 right-0 h-2 rounded-full bg-white/15" />
+                          <div
+                            className="absolute left-0 h-2 rounded-full"
+                            style={{ width: `${pct}%`, backgroundColor: t.accentColor }}
+                          />
+                          <input
+                            type="range"
+                            min={likert.min}
+                            max={likert.max}
+                            step={likert.step}
+                            value={sliderValue}
+                            onChange={(e) =>
+                              setResponses((prev) => ({
+                                ...prev,
+                                [responseKey]: Number(e.target.value),
+                              }))
+                            }
+                            className="relative w-full h-2 appearance-none bg-transparent cursor-pointer"
+                            style={{ accentColor: t.accentColor }}
+                          />
+                        </div>
+
+                        <div className="flex justify-between items-center mt-1">
+                          <span className={`text-[10px] font-semibold opacity-60 ${t.subText}`}>
+                            {likert.min}
+                          </span>
+                          <span className={`text-[10px] font-semibold opacity-60 ${t.subText}`}>
+                            {likert.max}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })() : (
+                    <div className="flex flex-wrap gap-2">
+                      {likert.values.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() =>
+                            setResponses((prev) => ({
+                              ...prev,
+                              [responseKey]: option.value,
+                            }))
+                          }
+                          className={`flex-1 min-w-[80px] py-2 rounded-lg transition-all duration-150 ${
+                            currentValue === option.value ? t.ratingSelected : t.ratingDefault
+                          }`}
+                        >
+                          <span className="text-[12px] font-semibold leading-tight">
+                            {option.label}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
+
+          {/* FOOTER */}
+          <div className={`shrink-0 px-6 py-4 border-t ${t.footerBorder}`}>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={!allAnswered}
+              className={`w-full py-3.5 font-black uppercase tracking-widest text-[11px] rounded-xl transition-all ${
+                allAnswered ? `${t.btnPrimary} shadow-lg` : "opacity-25 cursor-not-allowed bg-white/10 text-white"
+              }`}
+            >
+              {isLastPage ? "Finish & See Results ✓" : "Next →"}
+            </button>
+
+            {!allAnswered && (
+              <p className={`text-center text-[10px] mt-2 opacity-30 ${t.labelColor}`}>
+                {currentSub.items.length - answeredCount} item
+                {currentSub.items.length - answeredCount !== 1 ? "s" : ""} remaining
+              </p>
+            )}
+          </div>
+
         </div>
-      );
-    }
-  
-    return null;
+      </div>
+    );
   }
+
+  return null;
+}

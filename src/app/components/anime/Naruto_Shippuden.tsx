@@ -287,18 +287,6 @@ const CATALOG: Arc[] = [
               { id: 'mach_7', text: 'There are things you should hide from other people to preserve your reputation.' },
               { id: 'mach_8', text: 'Make sure your plans benefit yourself, not others.' },
               { id: 'mach_9', text: 'Most people can be manipulated.' },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Episode 2',
-       
-        subscales: [
-          {
-            label: 'Gaara Last Stand',
-            likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
-            items: [
               { id: 'narc_1', text: 'I tend to want others to admire me.' },
               { id: 'narc_2', text: 'I tend to want others to pay attention to me.' },
               { id: 'narc_3', text: 'I tend to seek prestige or status.' },
@@ -308,17 +296,6 @@ const CATALOG: Arc[] = [
               { id: 'narc_7', text: 'I tend to think I am as special as I am important.' },
               { id: 'narc_8', text: 'I tend to think I deserve extra special treatment.' },
               { id: 'narc_9', text: 'I tend to think I am better than others.' },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Episode 3',
-        subscales: [
-          {
-            label: 'The Sand Fallen Kazekage',
-            likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
-            items: [
               { id: 'psyc_1', text: 'I tend to be callous or insensitive.' },
               { id: 'psyc_2', text: 'I tend not to feel remorseful when I do something wrong.' },
               { id: 'psyc_3', text: 'I tend to be cynical.' },
@@ -328,18 +305,6 @@ const CATALOG: Arc[] = [
               { id: 'psyc_7', text: 'I tend to be unpredictable.' },
               { id: 'psyc_8', text: 'I tend to do dangerous things.' },
               { id: 'psyc_9', text: 'I tend to behave erratically.' },
-            ],
-          },
-        ],
-      },
-      {
-        title: 'Episode 4',
-    
-        subscales: [
-          {
-            label: 'The Akatsuki Strikes',
-            likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
-            items: [
               { id: 'sad_1', text: 'I have hurt people for my own enjoyment.' },
               { id: 'sad_2', text: 'I would enjoy hurting someone physically, sexually, or emotionally.' },
               { id: 'sad_3', text: 'I have fantasized about hurting people who have annoyed me.' },
@@ -349,13 +314,12 @@ const CATALOG: Arc[] = [
               { id: 'sad_7', text: 'People would enjoy hurting others if they tried it.' },
               { id: 'sad_8', text: 'Hurting people is exciting.' },
               { id: 'sad_9', text: 'I have humiliated others to keep them in line.' },
-              
             ],
           },
         ],
       },
       {
-        title: 'Episode 5',
+        title: 'Episode 2',
         subscales: [
           {
             label: 'The Shadow of Itachi',
@@ -369,46 +333,34 @@ const CATALOG: Arc[] = [
               { id: 'ex6', text: 'Is less active than other people.' },
               {id: "ag1", text: "Is compassionate has a soft heart." },
               {id: "ag2", text: "Is respectful, treats others with respect. "},
-              {id: "ag3", text: "Tends to find fault with others. " },
-              {id: "ag4", text: "Feels little sympathy for others. " },
+              {id: "ag3", text: "Tends to find fault with others." },
+              {id: "ag4", text: "Feels little sympathy for others." },
               {id: "ag5", text: "Starts quarrels with others." },
-              {id: "ag6", text: "Has a forgiving nature. " },
+              {id: "ag6", text: "Has a forgiving nature." },
+              {id: "co1", text: "Tends to be disorganized." },
+              {id: "co2", text: "Tends to be lazy."},
+              {id: "co3", text: "Is dependable, steady." },
+              {id: "co4", text: "Keeps things nest and tidy." },
+              {id: "co5", text: "Has difficulty getting started on tasks." },
+              {id: "co6", text: "Can be somewhat careless." },
+              {id: "ne1", text: "Is relaxed, handles stress well." },
+              {id: "ne2", text: "Stays optimistic after experiencing a setback."},
+              {id: "ne3", text: "Is moody, has up and down mood swings." },
+              {id: "ne4", text: "Worries a lot." },
+              {id: "ne5", text: "Feels secure, comfortable with self." },
+              {id: "ne6", text: "Is emotionally stable, not easily upset." },
+              {id: "om1", text: "Has few artistic interests." },
+              {id: "om2", text: "Is curious about many different things."},
+              {id: "om3", text: "Is inventive, finds clever ways to do things." },
+              {id: "om4", text: "Fascinated by art music or literature." },
+              {id: "om5", text: "Avoids intellectual, philosophical discussions." },
+              {id: "om6", text: "Has little creativity." }
             ],
           },
         ],
       },
       {
-        title:"Episode 6",
-        subscales: [
-          {
-            label:"The Tailed Beast Within",
-            likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
-            items:[
-              {id: "co1", text: "Tends to be disorganized." },
-        {id: "co2", text: "Tends to be lazy."},
-        {id: "co3", text: "Is dependable, steady." },
-        {id: "co4", text: "Keeps things nest and tidy." },
-        {id: "co5", text: "Has difficulty getting started on tasks. " },
-        {id: "co6", text: "Can be somewhat careless." },
-        {id: "ne1", text: "Is relaxed, handles stress well." },
-        {id: "ne2", text: "Stays optimistic after experiencing a setback."},
-        {id: "ne3", text: "Is moody, has up and down mood swings. " },
-        {id: "ne4", text: "Worries a lot. " },
-        {id: "ne5", text: "Feels secure, comfortable with self. " },
-        {id: "ne6", text: "Is emotionally stable, not easily upset. " },
-        {id: "om1", text: "Has few artistic interests. " },
-        {id: "om2", text: "Is curious about many different things. "},
-        {id: "om3", text: "Is inventive, finds clever ways to do things. " },
-        {id: "om4", text: "Fascinated by art music or literature. " },
-        {id: "om5", text: "Avoids intellectual, philosophical discussions. " },
-        {id: "om6", text: "Has little creativity. " }
-
-            ]
-          }
-        ]
-      },
-      {
-        title:"Episode 7",
+        title:"Episode 3",
         subscales: [
           {
             label:"A Promise to Sakura",
@@ -435,7 +387,7 @@ const CATALOG: Arc[] = [
         ]
       },
       {
-        title:"Episode 8",
+        title:"Episode 4",
         subscales: [
           {
             label:"The Snake's New Vessel",
@@ -469,7 +421,7 @@ const CATALOG: Arc[] = [
      episodes: [
       
       {
-        title:"Episode 9",
+        title:"Episode 5",
         subscales: [
           {
             label:"The Curse of the Uchiha",
@@ -496,7 +448,7 @@ const CATALOG: Arc[] = [
         ]
       },
     {
-      title:"Episode 10",
+      title:"Episode 6",
       subscales:[
         {
           label:"Team Seven Reunited",
@@ -526,7 +478,7 @@ const CATALOG: Arc[] = [
       ]
     },
     {
-      title:"Episode 11",
+      title:"Episode 7",
       subscales:[{
         label:"The Battle in the Hideout",
         likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Neither agree nor disagree"},{value:4, label:"Agree"},{value:5, label:"Strongly agree"}]},
@@ -550,37 +502,37 @@ const CATALOG: Arc[] = [
       ]
     },
     {
-      title:"Episode 12",
+      title:"Episode 8",
       subscales:[{
         label:"Brothers Beneath the Moon",
         likert:{min:0, max:3, step:1, type:"buttons", values:[{value:0, label:"Din not apply to me at all"},{value:1, label:"Applied to me to some degree, or some of the time"},{value:2, label:"Applied to me to a considerable degree, or a good part of the time"},{value:3, label:"Applied to me very much, or most of the time"}]},
         items:[
           {id: "dep1", text: "I couldn`t seem to experience any positive feeling at all."},
-      {id: "dep2", text: "I found it difficult to work up the initiative to do things."},
-      {id: "dep3", text: "I felt that I had nothing to look forward to."},
-      {id: "dep4", text: "I felt down-hearted and blue."},
-      {id: "dep5", text: "I was unable to become enthusiastic about anything."},
-      {id: "dep6", text: "I felt I wasn`t worth much as a person."},
-      {id: "dep7", text: "I felt that life was meaningless."},
-      {id: "stre1", text: "I found it hard to wind down."},
-      {id: "stre2", text: "I tended to over-react to situations."},
-      {id: "stre3", text: "I felt that I was using a lot of nervous energy."},
-      {id: "stre4", text: "I found myself getting agitated."},
-      {id: "stre5", text: "I found it difficult to relax."},
-      {id: "stre6", text: "I was intolerant of anything that kept me from getting on with what I was doing."},
-      {id: "stre7", text: "I felt that I was rather touchy."},
-      {id: "anx1", text: "I was aware of dryness of my mouth."},
-        {id: "anx2", text: "I experienced breathing difficulty (e.g: excessively rapid breahting, breathelessness in the absence of physical exertion)."},
-        {id: "anx3", text: "I experienced trembling (e.g: in the hands)."},
-        {id: "anx4", text: "I was worried about situations in which I might panic and make a fool of myself."},
-        {id: "anx5", text: "I felt I was close to panic."},
-        {id: "anx6", text: "I was aware of the action of my heart in the absence of physical exertion (e.g: sense of heart rate increase, heart skipping a beat)."},
-        {id: "anx7", text: "I felt scared without any good reason."},
+          {id: "dep2", text: "I found it difficult to work up the initiative to do things."},
+          {id: "dep3", text: "I felt that I had nothing to look forward to."},
+          {id: "dep4", text: "I felt down-hearted and blue."},
+          {id: "dep5", text: "I was unable to become enthusiastic about anything."},
+          {id: "dep6", text: "I felt I wasn`t worth much as a person."},
+          {id: "dep7", text: "I felt that life was meaningless."},
+          {id: "stre1", text: "I found it hard to wind down."},
+          {id: "stre2", text: "I tended to over-react to situations."},
+          {id: "stre3", text: "I felt that I was using a lot of nervous energy."},
+          {id: "stre4", text: "I found myself getting agitated."},
+          {id: "stre5", text: "I found it difficult to relax."},
+          {id: "stre6", text: "I was intolerant of anything that kept me from getting on with what I was doing."},
+          {id: "stre7", text: "I felt that I was rather touchy."},
+          {id: "anx1", text: "I was aware of dryness of my mouth."},
+          {id: "anx2", text: "I experienced breathing difficulty (e.g: excessively rapid breahting, breathelessness in the absence of physical exertion)."},
+          {id: "anx3", text: "I experienced trembling (e.g: in the hands)."},
+          {id: "anx4", text: "I was worried about situations in which I might panic and make a fool of myself."},
+          {id: "anx5", text: "I felt I was close to panic."},
+          {id: "anx6", text: "I was aware of the action of my heart in the absence of physical exertion (e.g: sense of heart rate increase, heart skipping a beat)."},
+          {id: "anx7", text: "I felt scared without any good reason."},
         ]
       }]
     },
     {
-      title:"Episode 13",
+      title:"Episode 9",
       subscales:[{
         label:"The Truth Behind the Mangekyō",
         items:[
@@ -599,7 +551,7 @@ const CATALOG: Arc[] = [
       }]
     },
     {
-      title:"Episode 14",
+      title:"Episode 10",
       subscales:[{
         label:"A Revenge Born From Pain",
         items:[
@@ -623,7 +575,7 @@ const CATALOG: Arc[] = [
     },
 
   {
-    title:"Episode 15",
+    title:"Episode 11",
     subscales:[{
       label:"The Six Paths of Pain",
       likert:{min:0, max:3, step:1, type:"buttons",values:[{value:0, label:"Strongly disagree"},{value:1, label:"Disagree"},{value:2, label:"Agree"},{value:3, label:"Strongly agree"}]},
@@ -646,7 +598,7 @@ const CATALOG: Arc[] = [
     }]
   },
   {
-    title: "Episode 16",
+    title: "Episode 12",
     subscales:[{
       label:"The Destruction of Konoha",
       likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Somewhat disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Somewhat agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]},
@@ -679,7 +631,7 @@ const CATALOG: Arc[] = [
     }]
   },
   {
-    title:"Episode 17",
+    title:"Episode 13",
     subscales:[{
       label:"The Sage Returns",
       likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Completely untrue"},{value:2, label:"Mostly untrue"},{value:3, label:"Somewhat true"},{value:4, label:"Mostly true"},{value:5, label:"Completely true"}]},
@@ -718,7 +670,7 @@ const CATALOG: Arc[] = [
     title:"Arc 3 - Pain of the Shinobi",
      episodes: [
       {
-        title:"Episode 18",
+        title:"Episode 14",
         subscales:[{
           label:"Naruto's Final Lesson",
           items:[
@@ -754,7 +706,7 @@ const CATALOG: Arc[] = [
         ]
       },
       {
-        title:"Episode 19",
+        title:"Episode 15",
         subscales:[{
           label:"The Battle of the Nine-Tails",
           items:[
@@ -777,7 +729,7 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 20",
+        title:"Episode 16",
         subscales:[{
           label:"A Village Reborn",
           likert:{min:0, max:6, step:1, type:"buttons", values:[{value:0, label:"Does not describe me at all"},{value:1, label:"1"},{value:2, label:"2"},{value:3, label:"Describe me somewhat"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"Describes me very well"}]},
@@ -816,7 +768,7 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 21",
+        title:"Episode 17",
         subscales:[{
           label:"The Hero of Konoha",
           items:[
@@ -843,7 +795,7 @@ const CATALOG: Arc[] = [
       },
 
       {
-        title:"Episode 22",
+        title:"Episode 18",
         subscales:[{
           label:"The Allied Shinobi Forces",
           likert:{min:0, max:4, step:1, type:"buttons", values:[{value:0, label:"Never"},{value:1, label:"Rarely"},{value:2, label:"Sometimes"},{value:3, label:"Often"},{value:4, label:"Always"}]},
@@ -878,7 +830,7 @@ const CATALOG: Arc[] = [
    title:"Arc 4 - Fourth Great Ninja War",
      episodes: [
       {
-       title:"Episode 23",
+       title:"Episode 19",
        subscales:[{
         label:"The Army of the Dead",
         likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Almost always false of me"},{value:2, label:"2"},{value:3, label:"More often false of me"},{value:4, label:"4"},{value:5, label:"More often true of me"},{value:6, label:"6"},{value:7, label:"Almost always true of me"}]},
@@ -905,7 +857,7 @@ const CATALOG: Arc[] = [
        }]
       },
       {
-        title:"Episode 24",
+        title:"Episode 20",
         subscales:[{
           label:"The Masked Man",
           likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Almost never"},{value:2, label:"Occasionally"},{value:3, label:"About half of the time"},{value:4, label:"Fairly"},{value:5, label:"Almost always"}]},
@@ -940,7 +892,7 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 25",
+        title:"Episode 21",
         subscales:[{
           label:"The Nine-Tails' Choice",
           likert:{min:1, max:10, step:1, type:"slider",values:[{value:1, label:"Never"},{value:2, label:"2"},{value:3, label:"3"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"6"},{value:7, label:"7"},{value:8, label:"8"},{value:9, label:"9"},{value:10, label:"Always"}]},
@@ -972,7 +924,7 @@ const CATALOG: Arc[] = [
    title:"Arc 5 - Sage of Six Paths",
      episodes: [
       {
-        title:"Episode 26",
+        title:"Episode 22",
         subscales:[{
           label:"The Brothers of the Battlefield",
           likert:{min:1, max:4, step:1, type:"buttons",values:[{value:1, label:"I haven`t been doing this at all"},{value:2, label:"I`ve been doing this a little bit"},{value:3,label:"I`ve been doing this a medium amount"},{value:4, label:"I`ve been doing this a lot"}]},
@@ -1012,7 +964,7 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 27",
+        title:"Episode 23",
         subscales:[{
           label:"The Fourth Hokage Returns",
           items:[
@@ -1039,7 +991,7 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 28",
+        title:"Episode 24",
         subscales:[{
           label:"The Ten-Tails Awakens",
           likert:{min:0, max:1, step:1, type:"buttons", values:[{value:0, label:"No"},{value:1, label:"Yes"}]},
@@ -1068,7 +1020,7 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 29",
+        title:"Episode 25",
         subscales:[{
           label:"The Ancient Shinobi",
           likert:{min:0, max:4, step:1, type:"buttons",values:[{value:0, label:"Strongly disagree"},{value:1, label:"Disagree"},{value:2, label:"Neither agree nor disagree"},{value:3, label:"Agree"},{value:4, label:"Strongly agree"}]},
@@ -1102,7 +1054,7 @@ const CATALOG: Arc[] = [
         }]
       },
       {
-        title:"Episode 30",
+        title:"Episode 26",
         subscales:[{
           label:"The Will of Hagoromo",
           likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Moderately disagree"},{value:3, label:"Neither agree nor disagree"},{value:4, label:"Moderately agree"},{value:5, label:"Strongly agree"}]},
@@ -1127,31 +1079,49 @@ const CATALOG: Arc[] = [
     episodes:[
       
       {
-        title:"Episode 31",
+        title:"Episode 27",
         subscales:[{
           label:"The Final Team Seven",
+          likert:{min:1, max:7,step:1,type:"slider",values:[{value:1, label:"Strongly disagree"},{value:2, label:"2"},{value:3, label:"3"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"6"},{value:7, label:"Strongly agree"}]},
           items:[
-            {id: 'crt_1', text: 'A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball. How much does the ball cost? _____ cents',type:"text"},
-            {id: 'crt_2', text: 'If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets? _____ minutes', type:"text"},
-            {id: 'crt_3', text: 'In a lake, there is a patch of lily pads. Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half of the lake? _____ days', type:"text"},
-            {id: 'bnt_1', text: 'Out of 1,000 people in a small town, 500 are members of a choir. Out of these 500 members, 100 are men. Out of the 500 inhabitants that are not in the choir, 300 are men. What is the probability that a randomly drawn man is a member of the choir? Please indicate the probability in percent. _____ %', type:"text"},
-            {id: 'bnt_2', text: 'Imagine we are throwing a five-sided die 50 times. On average, out of these 50 throws, how many times would this five-sided die show an odd number (1, 3 or 5)? _____ out of 50 throws',type:"text"},
-            {id: 'bnt_3', text: 'In a forest, 20% of mushrooms are red, 50% are brown, and 30% are white. A red mushroom is poisonous with a probability of 20%. A mushroom that is not red is poisonous with a probability of 5%. What is the probability that a poisonous mushroom in the forest is red? _____ %', type:"text"},
-            {id: 'crt2_1', text: "If you're running a race and you pass the person in second place, what place are you in?", type:"text" },
-            {id: 'crt2_2', text: 'A farmer had 15 sheep and all but 8 died. How many are left?', type:"text"},
-            {id: 'crt2_3', text: "Emily's father has three daughters. The first two are named April and May. What is the third daughter's name?", type:"text"},
-            {id: 'crt2_4', text: "How many cubic feet of dirt are there in a hole that is 3' deep x 3' wide x 3' long?",type:"text"}
+            {id: 'self_construal_1', text: "I enjoy being unique and different from others in many respects."},
+            {id: 'self_construal_2', text: "I can talk openly with a person who I meet for the first time, even when this person is much older than I am."},
+            {id: 'self_construal_3', text: "Even when I strongly disagree with group members, I avoid an argument."},
+            {id: 'self_construal_4', text: "I have respect for the authority figures with whom I interact."},
+            {id: 'self_construal_5', text: "I do my own thing, regardless of what others think."},
+            {id: 'self_construal_6', text: "I respect people who are modest about themselves."},
+            {id: 'self_construal_7', text: "I feel it is important for me to act as an independent person." },
+            {id: 'self_construal_8', text: "I will sacrifice my self interest for the benefit of the group I am in."},
+            {id: 'self_construal_9', text: "I`d rather say NO directly, than risk being misunderstood."},
+            {id: 'self_construal_10', text: "Having a lively imagination is important to me."},
+            {id: "self_construal_11", text: "I should take into consideration my parents&#39; advice when making education/career plans."},
+            {id: "self_construal_12", text: "I feel my fate is intertwined with the fate of those around me."},
+            {id: "self_construal_13", text: "I prefer to be direct and forthright when dealing with people I&#39;ve just met."},
+            {id: "self_construal_14", text: "I feel good when I cooperate with others."},
+            {id: "self_construal_15", text: "I am comfortable with being singled out for praise or rewards."},
+            {id: "self_construal_16", text: "If my brother or sister fails, I feel responsible."},
+            {id: "self_construal_17", text: "I often have the feeling that my relationships with others are more important than my own accomplishments."},
+            {id: "self_construal_18", text: "Speaking up during a class (or a meeting) is not a problem for me."},
+            {id: "self_construal_19", text: "I would offer my seat in a bus to my professor (or my boss)."},
+            {id: "self_construal_20", text: "I act the same way no matter who I am with."},
+            {id: "self_construal_21", text: "My happiness depends on the happiness of those around me."},
+            {id: "self_construal_22", text: "I value being in good health above everything."},
+            {id: "self_construal_23", text: "I will stay in a group if they need me, even when I am not happy with the group."},
+            {id: "self_construal_24", text: "I try to do what is best for me, regardless of how that might affect others."},
+            {id: "self_construal_25", text: "Being able to take care of myself is a primary concern for me."},
+            {id: "self_construal_26", text: "It is important to me to respect decisions made by the group."},
+            {id: "self_construal_27", text: "My personal identity, independent of others, is very important to me."},
+            {id: "self_construal_28", text: "It is important for me to maintain harmony within my group."},
+            {id: "self_construal_29", text: "I act the same way at home that I do at school (or work)."},
+            {id: "self_construal_30", text: "I usually go along with what others want to do, even when I would rather do something different."},
+
+
           ]
         }]
-      }
-    ]
-  },
-  {
-    title:"Epilogue 32-33",
-     episodes: [
-      
+      },
+  
       {
-        title:"Episode 32",
+        title:"Episode 28",
         subscales:[{
           label:"Naruto and Sasuke",
           likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Slightly disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Slightly agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]},
@@ -1170,9 +1140,10 @@ const CATALOG: Arc[] = [
             {id:"aswe12", text:"When I watch an anime series, I often feel that my body is in the room, but my mind is inside the world created by the anime story."}
           ]
         }]
-      },
+      }
+      ,
       {
-        title:"Episode 33",
+        title:"Episode 29",
         subscales:[{
           label:"The Shinobi Who Changed the World",
           likert:{min:1, max:6, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Slightly disagree"},{value:4, label:"Slightly agree"},{value:5, label:"Agree"},{value:6, label:"Strongly agree"}]},
@@ -1201,8 +1172,11 @@ const CATALOG: Arc[] = [
           ]
         }]
       }
+    
     ]
-  }];
+  }
+
+]
 
 interface DemographicPayload {
   age?: number;
