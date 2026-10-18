@@ -1,7 +1,13 @@
-// src/app/layout.tsx
+import "./globals.css";
+import type { Viewport } from "next";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import "./globals.css";
+import MobileShell from "./components/MobileShell";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export default function RootLayout({
   children,
@@ -10,23 +16,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ro">
-      <body className="flex flex-col min-h-screen bg-white">
-        {/* Header-ul rămâne sus */}
-        <Header />
+      <body className="bg-white">
+        <MobileShell className="flex flex-col">
+          {/* Header-ul rămâne sus */}
+          <Header />
 
-        {/* main cu flex-grow împinge Footer-ul în jos dacă pagina e goală */}
-        <main className="flex-grow">
-          {children}
-        </main>
+          {/* main cu flex-grow împinge Footer-ul în jos dacă pagina e goală */}
+          <main className="flex-grow">{children}</main>
 
-        {/* Footer-ul cu disclaimer-ul tău academic */}
-        <Footer />
+          {/* Footer-ul cu disclaimer-ul tău academic */}
+          <Footer />
+        </MobileShell>
       </body>
     </html>
   );
 }
-
-
-
-
-
