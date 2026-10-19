@@ -1402,7 +1402,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
          className={`w-full h-full flex flex-col md:flex-row overflow-hidden ${t.bg}`}
          style={{ fontFamily: t.fontFamily }}
        >
-         <div className="relative w-full md:w-2/5 h-48 md:h-full flex items-end justify-center overflow-hidden">
+         <div className="relative ww-full md:w-2/5 h-40 md:h-full shrink-0 flex items-end justify-center overflow-hidden">
            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0B1218]/60 z-10 hidden md:block" />
            <div className="relative w-full h-[95%] max-w-sm">
              <Image
@@ -1415,7 +1415,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
            </div>
          </div>
  
-         <div className="flex-1 flex flex-col items-center justify-center p-10 text-center">
+         <div className="flex-1 flex flex-col items-center justify-center p-5 md:p-10 pb-24 md:pb-10 text-center">
            <span className={`font-bold uppercase tracking-[0.3em] text-[10px] opacity-50 block mb-3 ${t.labelColor}`}>
              {currentArc.title}
            </span>
@@ -1474,7 +1474,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
  
          <div className="flex-1 flex flex-col overflow-hidden">
  
-           <div className={`shrink-0 px-6 pt-4 pb-3 border-b ${t.headerBorder}`}>
+           <div className={`shrink-0 pl-4 pr-14 md:px-6 pt-4 pb-3 border-b ${t.headerBorder}`}>
              <div className="flex items-center gap-4">
                <div className="flex-1 min-w-0">
                  <span className={`text-[10px] font-bold uppercase tracking-widest opacity-40 block ${t.labelColor}`}>
@@ -1498,7 +1498,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
            </div>
  
            {/* ITEMS */}
-           <div className="flex-1 min-h-0 overflow-y-auto px-6 py-4 space-y-3">
+           <div className="flex-1 min-h-0 overflow-y-auto px-4 md:px-6 py-4 space-y-3">
              {currentSub.items.map((item, idx) => {
                const responseKey = getResponseKey(currentEp.title, item.id);
                const currentValue = responses[responseKey];
@@ -1546,7 +1546,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
                      currentValue !== undefined ? t.itemBgAnswered : t.itemBg
                    }`}
                  >
-                   <p className={`text-[11px] md:text-xs font-medium mb-3 leading-tight ${t.text}`}>
+                   <p className={`text-sm md:text-xs font-medium mb-3 leading-tight ${t.text}`}>
                      <span className="opacity-30 mr-2 font-black text-xs">{idx + 1}.</span>
                      {item.text}
                    </p>
@@ -1589,7 +1589,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
                                  [responseKey]: Number(e.target.value),
                                }))
                              }
-                             className="relative w-full h-2 appearance-none bg-transparent cursor-pointer"
+                             className="relative w-full h-6 md:h-2 appearance-none bg-transparent cursor-pointer"
                              style={{ accentColor: t.accentColor }}
                            />
                          </div>
@@ -1616,7 +1616,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
                                [responseKey]: option.value,
                              }))
                            }
-                           className={`flex-1 min-w-[80px] py-2 rounded-lg transition-all duration-150 ${
+                           className={`flex-1 min-w-[80px] py-3 md:py-2 rounded-lg transition-all duration-150 ${
                              currentValue === option.value ? t.ratingSelected : t.ratingDefault
                            }`}
                          >
@@ -1633,7 +1633,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
            </div>
  
            {/* FOOTER */}
-           <div className={`shrink-0 px-6 py-4 border-t ${t.footerBorder}`}>
+           <div className={`shrink-0 px-4 md:px-6 pt-4 pb-20 md:pb-4 border-t ${t.footerBorder}`}>
              <button
                type="button"
                onClick={handleNext}
