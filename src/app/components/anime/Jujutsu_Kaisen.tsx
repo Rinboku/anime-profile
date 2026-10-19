@@ -1495,7 +1495,8 @@ const currentArcPercent = answeredByArc[arcIdx];
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center p-5 md:p-10 pb-24 md:pb-10 text-center">
+        <div className="flex-1 flex flex-col items-center justify-center p-5 md:p-10 pb-24 md:pb-10 text-center
+        ">
           <span className={`font-bold uppercase tracking-[0.3em] text-[10px] opacity-50 block mb-3 ${t.labelColor}`}>
             {currentArc.title}
           </span>
