@@ -1474,7 +1474,7 @@ export default function Black_Clover({ onFinish, onBack, demographics }: BlackCl
  
          <div className="flex-1 flex flex-col overflow-hidden">
  
-           <div className={`shrink-0 pl-4 pr-14 md:px-6 pt-4 pb-3 border-b ${t.headerBorder}`}>
+           <div className={`shrink-0 pl-4 pr-14 md:pl-6 md:pr-20 pt-4 pb-3 border-b ${t.headerBorder}`}>
              <div className="flex items-center gap-4">
                <div className="flex-1 min-w-0">
                  <span className={`text-[10px] font-bold uppercase tracking-widest opacity-40 block ${t.labelColor}`}>
