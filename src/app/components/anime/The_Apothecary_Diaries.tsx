@@ -373,7 +373,7 @@ const L5_GAS: LikertConfig = {min:1, max:5, step:1, type:"buttons",values:[
 
 const CATALOG: Arc[] = [
   {
-    title: 'ARC 1 — Akatsuki Rising',
+    title: 'ARC 1 — The Rear Palace Poison Mysteries',
     episodes: [
       
        {
@@ -381,7 +381,7 @@ const CATALOG: Arc[] = [
     
         subscales: [
           {
-            label: 'The Return of the Hero',
+            label: 'The Apothecary of the Red-Light District',
             likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
             items: [
               { id: 'mach_1', text: 'It\'s not wise to tell your secrets.' },
@@ -428,7 +428,7 @@ const CATALOG: Arc[] = [
         title: 'Episode 2',
         subscales: [
           {
-            label: 'The Shadow of Itachi',
+            label: 'The Curse of the Newborn Princes',
             likert: {min: 1, max: 5, step: 1, type: "buttons", values:[{value: 1, label:"Strongly disagree"}, {value: 2, label:"Disagree" }, {value: 3, label:"Neutral"},{value: 4, label:"Agree"},{value:5, label:"Strongly Agree"}]},
             items: [
               { id: 'ex1', text: 'Is outgoing, sociable.' },
@@ -469,7 +469,7 @@ const CATALOG: Arc[] = [
         title:"Episode 3",
         subscales: [
           {
-            label:"A Promise to Sakura",
+            label:"The Imperial Taster’s Curiosity",
             likert:{min:1, max:4, step: 1, type: "buttons", values:[{value: 1, label:"Agree Strongly"},{value:2, label:"Agree Some"}, {value:3, label:"Disagree Some"},{value:4, label:"Disagree Strongly"}]},
             items:[
               {id: "pre1", text: "I have a reserved and cautious attitude toward life. "},
@@ -496,7 +496,7 @@ const CATALOG: Arc[] = [
         title:"Episode 4",
         subscales: [
           {
-            label:"The Snake's New Vessel",
+            label:"Powdered Face and Lead Poisoning",
             likert:{min:1, max:5, step: 1, type: "buttons", values:[{value:1, label:"Extremely uncharacteristic of me"},{value:2, label:"Somewhat uncharacteristic of me"},{value:3, label:"Uncertain"},{value:4, label:"Somehat characteristic of me"},{value:5, label:"Extremely characteristic of me"}]},
             items:[
               {id: "nfc1", text: "I would prefer complex to simple problems."},
@@ -523,14 +523,14 @@ const CATALOG: Arc[] = [
     ],         // ← închide episodes[]
   },
   {
-    title:"Arc 2 - Pursuit of Sasuke",
+    title:"Arc 2 - The Courtesan’s Daughter & Court Intrigues",
      episodes: [
       
       {
         title:"Episode 5",
         subscales: [
           {
-            label:"The Curse of the Uchiha",
+            label:"A Banquet of Hidden Toxins",
             likert:{min: 0, max: 100, step : 1, type:"slider",values: []},
             items:[
              {id: "mds1", text: "How much of your time spent daydreaming is occupied by vivid and counselor-like characters or elaborate fantasy worlds?"},
@@ -557,7 +557,7 @@ const CATALOG: Arc[] = [
       title:"Episode 6",
       subscales:[
         {
-          label:"Team Seven Reunited",
+          label:"The Spirit at the Ramparts",
           likert:{min: 1, max: 5, step:1, type:"buttons",values:[{value:1, label:"Almost never"},{value:2, label:"Sometimes"},{value:3, label:"Regularly"},{value:4, label:"Often"},{value:5, label:"Almost always"}]},
           items:[
             {id: "sb1", text: "I feel that I am the one who is responsible for what has happened."},
@@ -586,7 +586,7 @@ const CATALOG: Arc[] = [
     {
       title:"Episode 7",
       subscales:[{
-        label:"The Battle in the Hideout",
+        label:"The Three Princesses of Verdigris",
         likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Neither agree nor disagree"},{value:4, label:"Agree"},{value:5, label:"Strongly agree"}]},
         items:[
       {id : "psya1", text: "I feel psychological pain."},
@@ -610,7 +610,7 @@ const CATALOG: Arc[] = [
     {
       title:"Episode 8",
       subscales:[{
-        label:"Brothers Beneath the Moon",
+        label:"The Cipher on the Silk Handkerchief",
         likert:{min:0, max:3, step:1, type:"buttons", values:[{value:0, label:"Din not apply to me at all"},{value:1, label:"Applied to me to some degree, or some of the time"},{value:2, label:"Applied to me to a considerable degree, or a good part of the time"},{value:3, label:"Applied to me very much, or most of the time"}]},
         items:[
           {id: "dep1", text: "I couldn`t seem to experience any positive feeling at all."},
@@ -640,7 +640,7 @@ const CATALOG: Arc[] = [
     {
       title:"Episode 9",
       subscales:[{
-        label:"The Truth Behind the Mangekyō",
+        label:"An Incense for Longing",
         items:[
         {id:"ins1", text:"Difficult falling asleep.", likert:{min:0, max:4, step:1,type:"buttons", values:[{value:0, label:"None"},{value:1, label:"Mild"},{value:2, label:"Moderate"},{value:3, label:"Severe"},{value:4, label:"Very severe"}]}
          
@@ -659,7 +659,7 @@ const CATALOG: Arc[] = [
     {
       title:"Episode 10",
       subscales:[{
-        label:"A Revenge Born From Pain",
+        label:"The Eunuch’s True Face",
         items:[
           {id:"rses1", text:"On the whole, I am satisfied with myself.",likert:{min:1, max:4, step:1, type:"buttons",values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Agree"},{value:4, label:"Strongly agree"}]}},
         {id:"rses2", text:"At the times I think I am no good at all.",likert:{min:1, max:4, step:1, type:"buttons",values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Agree"},{value:4, label:"Strongly agree"}]}},
@@ -683,7 +683,7 @@ const CATALOG: Arc[] = [
   {
     title:"Episode 11",
     subscales:[{
-      label:"The Six Paths of Pain",
+      label:"The Metalworker’s Will",
       likert:{min:0, max:3, step:1, type:"buttons",values:[{value:0, label:"Strongly disagree"},{value:1, label:"Disagree"},{value:2, label:"Agree"},{value:3, label:"Strongly agree"}]},
       items:[
          {id: "anh1", text:"I would enjoy favorite pastimes."},
@@ -706,7 +706,7 @@ const CATALOG: Arc[] = [
   {
     title: "Episode 12",
     subscales:[{
-      label:"The Destruction of Konoha",
+      label:"A Fire in the Archives",
       likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Somewhat disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Somewhat agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]},
       items:[
         {id: "dis1", text: "I am stuck in a situation that I feel is irrelevant."},
@@ -739,7 +739,7 @@ const CATALOG: Arc[] = [
   {
     title:"Episode 13",
     subscales:[{
-      label:"The Sage Returns",
+      label:"The Executioner’s Herb",
       likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Completely untrue"},{value:2, label:"Mostly untrue"},{value:3, label:"Somewhat true"},{value:4, label:"Mostly true"},{value:5, label:"Completely true"}]},
       items:[
         {id: "aut1", text: "I feel a sense of choice and freedom in the things I undertake."},
@@ -773,12 +773,12 @@ const CATALOG: Arc[] = [
     ]
   },
   {
-    title:"Arc 3 - Pain of the Shinobi",
+    title:"Arc 3 - Shadows Over the Imperial Court",
      episodes: [
       {
         title:"Episode 14",
         subscales:[{
-          label:"Naruto's Final Lesson",
+          label:"Conspiracy at the Hunting Grounds",
           items:[
            {id:"sali1", text: "You spend a lot of time thinking about social media or planning use of it.", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Very rarely"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
            {id:"tole1", text:"You feel an urge to use social media more and more.",likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Very rarely"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
@@ -814,7 +814,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 15",
         subscales:[{
-          label:"The Battle of the Nine-Tails",
+          label:"Jinshi’s Secret Duty",
           items:[
             {id:"tiktok1", text:"During the last 12 months...I think about how I could reduce my work/study time to spend more time on TikTok.", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Very rarely"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
             {id:"tiktok2", text:"During the last 12 months...I have TikTok in my mind even when I am not using it.", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Very rarely"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
@@ -837,7 +837,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 16",
         subscales:[{
-          label:"A Village Reborn",
+          label:"Envoys from the Western Kingdoms",
           likert:{min:0, max:6, step:1, type:"buttons", values:[{value:0, label:"Does not describe me at all"},{value:1, label:"1"},{value:2, label:"2"},{value:3, label:"Describe me somewhat"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"Describes me very well"}]},
           items:[
           {id:"radalcohol1", text:"Drinking is like a slippery slope, I end up drinking more than I wanted to."},
@@ -876,7 +876,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 17",
         subscales:[{
-          label:"The Hero of Konoha",
+          label:"The Blue-Eyed Dancer’s Poison",
           items:[
             {id:"gas1", text:"Did you think about playing a game all day long?", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Never"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
         {id:"gas2", text:"Did you spend increasing amounts of time on games?", likert:{min:1, max:5, step:1, type:"buttons",values:[{value:1, label:"Never"},{value:2, label:"Rarely"},{value:3, label:"Sometimes"},{value:4, label:"Often"},{value:5, label:"Very often"}]}},
@@ -903,7 +903,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 18",
         subscales:[{
-          label:"The Allied Shinobi Forces",
+          label:"Rebellion in the Northern Fortress",
           likert:{min:0, max:4, step:1, type:"buttons", values:[{value:0, label:"Never"},{value:1, label:"Rarely"},{value:2, label:"Sometimes"},{value:3, label:"Often"},{value:4, label:"Always"}]},
           items:[
             {id:"clc1", text:"How many times have you been watching anime series more than you would have?"},
@@ -933,12 +933,12 @@ const CATALOG: Arc[] = [
     ]
   },
   {
-   title:"Arc 4 - Fourth Great Ninja War",
+   title:"Arc 4 - The Foreign Envoy & The Shi Clan Plot",
      episodes: [
       {
        title:"Episode 19",
        subscales:[{
-        label:"The Army of the Dead",
+        label:"Lakan’s Board Game Tactics",
         likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Almost always false of me"},{value:2, label:"2"},{value:3, label:"More often false of me"},{value:4, label:"4"},{value:5, label:"More often true of me"},{value:6, label:"6"},{value:7, label:"Almost always true of me"}]},
         items:[
           {id: "fos1", text: "Although I feel badly at first when I mess up, over time I can give myself some slack."},
@@ -965,7 +965,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 20",
         subscales:[{
-          label:"The Masked Man",
+          label:"Fall of the Shi Clan",
           likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Almost never"},{value:2, label:"Occasionally"},{value:3, label:"About half of the time"},{value:4, label:"Fairly"},{value:5, label:"Almost always"}]},
           items:[
             {id: "sk1", text: "I'm kind to myself when I'm experiencing suffering."},
@@ -1000,7 +1000,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 21",
         subscales:[{
-          label:"The Nine-Tails' Choice",
+          label:"Journey to the West",
           likert:{min:1, max:10, step:1, type:"slider",values:[{value:1, label:"Never"},{value:2, label:"2"},{value:3, label:"3"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"6"},{value:7, label:"7"},{value:8, label:"8"},{value:9, label:"9"},{value:10, label:"Always"}]},
           items:[
             {id:"tfc9", text:"When someone fails, I think they are stupid."},
@@ -1027,12 +1027,12 @@ const CATALOG: Arc[] = [
     ]
   },
   {
-   title:"Arc 5 - Sage of Six Paths",
+   title:"Arc 5 - The Western Capital Expedition",
      episodes: [
       {
         title:"Episode 22",
         subscales:[{
-          label:"The Brothers of the Battlefield",
+          label:"The Locust Plague Premonition",
           likert:{min:1, max:4, step:1, type:"buttons",values:[{value:1, label:"I haven`t been doing this at all"},{value:2, label:"I`ve been doing this a little bit"},{value:3,label:"I`ve been doing this a medium amount"},{value:4, label:"I`ve been doing this a lot"}]},
           items:[
             {id: "sd1", text: "I've been turning to work or other activities to take my mind off things. "},
@@ -1072,7 +1072,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 23",
         subscales:[{
-          label:"The Fourth Hokage Returns",
+          label:"Medicine for the Mind",
           items:[
             {id:"sele1", text:"I open up for positive experiences.",likert:{min:1, max:7, step:1, type:"buttons",values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3,label:"Somewhat disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Somewhat agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]}},
             {id:"sele2", text:"I get to experience new things about myself.",likert:{min:1, max:7, step:1, type:"buttons",values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3,label:"Somewhat disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Somewhat agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]}},
@@ -1099,7 +1099,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 24",
         subscales:[{
-          label:"The Ten-Tails Awakens",
+          label:"Secrets of the Imperial Surgical Instruments",
           likert:{min:0, max:1, step:1, type:"buttons", values:[{value:0, label:"No"},{value:1, label:"Yes"}]},
           items:[
             { id: "bce1",  text: "Did you have at least one caregiver with whom you felt safe?" },
@@ -1128,7 +1128,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 25",
         subscales:[{
-          label:"The Ancient Shinobi",
+          label:"An Incurable Affection",
           likert:{min:0, max:4, step:1, type:"buttons",values:[{value:0, label:"Strongly disagree"},{value:1, label:"Disagree"},{value:2, label:"Neither agree nor disagree"},{value:3, label:"Agree"},{value:4, label:"Strongly agree"}]},
           items:[
             {id: "si1", text: "I stay at home most of the day."},
@@ -1162,7 +1162,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 26",
         subscales:[{
-          label:"The Will of Hagoromo",
+          label:"The Moonlit Medical Garden",
           likert:{min:1, max:5, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Moderately disagree"},{value:3, label:"Neither agree nor disagree"},{value:4, label:"Moderately agree"},{value:5, label:"Strongly agree"}]},
           items:[
             {id: "nb1", text: "If other people do not seem to accept me, I do not let it bother me. "},
@@ -1181,13 +1181,13 @@ const CATALOG: Arc[] = [
     ] 
   },
   {
-    title:"Arc 6 -Final Valley",
+    title:"Arc 6 - The True Lineage & The Ultimate Remedy",
     episodes:[
       
       {
         title:"Episode 27",
         subscales:[{
-          label:"The Final Team Seven",
+          label:"Unveiling the Imperial Crest",
           likert:{min:1, max:7,step:1,type:"slider",values:[{value:1, label:"Strongly disagree"},{value:2, label:"2"},{value:3, label:"3"},{value:4, label:"4"},{value:5, label:"5"},{value:6, label:"6"},{value:7, label:"Strongly agree"}]},
           items:[
             {id: 'self_construal_1', text: "I enjoy being unique and different from others in many respects."},
@@ -1229,7 +1229,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 28",
         subscales:[{
-          label:"Naruto and Sasuke",
+          label:"The Choice Between Crown and Scalpel",
           likert:{min:1, max:7, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Slightly disagree"},{value:4, label:"Neither agree nor disagree"},{value:5, label:"Slightly agree"},{value:6, label:"Agree"},{value:7, label:"Strongly agree"}]},
           items:[
             {id:"aswe1", text:"I am often impatient to find our how an anime story ends."},
@@ -1251,7 +1251,7 @@ const CATALOG: Arc[] = [
       {
         title:"Episode 29",
         subscales:[{
-          label:"The Shinobi Who Changed the World",
+          label:"The Apothecary’s Eternal Curiosity",
           likert:{min:1, max:6, step:1, type:"buttons", values:[{value:1, label:"Strongly disagree"},{value:2, label:"Disagree"},{value:3, label:"Slightly disagree"},{value:4, label:"Slightly agree"},{value:5, label:"Agree"},{value:6, label:"Strongly agree"}]},
           items:[
             {id:"nise1", text:"Thinking about anime story and characters help me know who I am as a person."},
